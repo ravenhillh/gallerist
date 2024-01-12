@@ -1,10 +1,15 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+require('dotenv').config();
+
+const { NODE_ENV = 'production' } = process.env;
+const isDev = NODE_ENV.includes('dev');
 
 const config = {
-  mode: 'development',
-  watch: true,
+  mode: isDev ? 'development' : 'production',
+  devtool: isDev ? 'inline-source-map' : 'source-map',
+  watch: isDev,
   stats: {
     excludeModules: /node_modules/,
   },
