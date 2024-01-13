@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const { authRouter } = require('./routes/auth');
+// require('dotenv').config();
 
 // what routes will we need client side to access db
 // PUT req to udpate art documents with secondary get request
