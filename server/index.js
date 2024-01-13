@@ -1,8 +1,13 @@
 const express = require('express');
 const path = require('path');
+const ensureLogIn = require('connect-ensure-login').ensureLoggedIn();
+const session = require('express-session');
+const logger = require('morgan');
+const passport = require('passport');
+const MongoStore = require('connect-mongo');
 const { authRouter } = require('./routes/auth');
-// require('dotenv').config();
-
+require('dotenv').config();
+const { EXPRESS_SECRET } = process.env;
 // what routes will we need client side to access db
 // PUT req to udpate art documents with secondary get request
 // Req for adding art to users gallery POST
@@ -13,7 +18,23 @@ const app = express();
 app.set('views', path.resolve(__dirname, '../client/views'));
 app.set('view engine', 'ejs');
 
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.use(express.static(path.resolve(__dirname, '../client/dist')));
+
+app.use(session({
+  secret: EXPRESS_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: 'mongodb://localhost/gallerist',
+    ttl: 14 * 24 * 60 * 60,
+    autoRemove: 'native',
+  }),
+}));
+app.use(passport.authenticate('session'));
 
 app.use('/', authRouter);
 

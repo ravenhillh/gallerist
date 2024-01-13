@@ -34,8 +34,7 @@ passport.use(new GoogleStrategy({
       console.error(' ', err);
       cb(err);
     });
-  }),
-));
+})));
 
 // function verify(issuer, profile, cb) {
 //   db.get('SELECT * FROM federated_credentials WHERE provider = ? AND subject = ?', [
@@ -72,12 +71,36 @@ passport.use(new GoogleStrategy({
 //     }
 //   });
 // ));
+passport.serializeUser((user, cb) => {
+  cb(null, user);
+});
+passport.deserializeUser((user, cb) => {
+//   User.find({ googleId })
+//     .then((user) => cb(null, user))
+//     .catch((err) => cb(err));
+  cb(null, user);
+});
 
 const authRouter = express.Router();
 
 authRouter.get('/login', (req, res) => {
+  console.log('rendering login')
   res.render('login');
 });
+
 authRouter.get('/login/federated/google', passport.authenticate('google'));
+
+authRouter.get('/oauth2/redirect/google', passport.authenticate('google', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+}));
+
+authRouter.post('/logout', (req, res, next) => {
+  req.logout((err) => {
+    if (err) { return next(err); }
+    console.log('in between if')
+    res.redirect('/login');
+  });
+});
 
 module.exports = { authRouter };

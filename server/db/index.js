@@ -12,7 +12,7 @@ mongoose.connect(db_uri)
 
 const UserSchema = new Schema({
   username: String,
-  name: String,
+  googleId: String,
   hash: String,
   salt: String,
   gallery: Object,
