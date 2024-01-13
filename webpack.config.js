@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 require('dotenv').config();
 
 const { NODE_ENV = 'production' } = process.env;
@@ -43,6 +44,7 @@ const config = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './client/index.ejs'),
     }),
+    new NodePolyfillPlugin(),
   ],
 };
 
