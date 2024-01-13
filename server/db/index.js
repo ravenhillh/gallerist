@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 const mongoose = require('mongoose');
+const findOrCreate = require('mongoose-findorcreate');
 
 const { Schema, model } = mongoose;
 
@@ -11,10 +12,21 @@ mongoose.connect(db_uri)
 
 const UserSchema = new Schema({
   username: String,
+  name: String,
+  hash: String,
+  salt: String,
   gallery: Object,
   friends: Array,
   wallet: Number,
 });
+UserSchema.plugin(findOrCreate);
+
+const CredentialsSchema = new Schema({
+  user_id: Number,
+  provider: String,
+  subject: String,
+});
+CredentialsSchema.plugin(findOrCreate);
 
 const ArtSchema = new Schema({
   title: String,
@@ -33,7 +45,7 @@ const ArtSchema = new Schema({
 });
 
 const User = model('User', UserSchema);
-
+const Credentials = model('Credentials', CredentialsSchema);
 const Art = model('Art', ArtSchema);
 
-module.exports = { User, Art };
+module.exports = { User, Credentials, Art };
