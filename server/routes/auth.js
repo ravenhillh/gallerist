@@ -3,7 +3,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, APIKEY } = process.env;
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
 const { User, Credentials } = require('../db/index');
 
 passport.use(new GoogleStrategy({
@@ -36,41 +36,6 @@ passport.use(new GoogleStrategy({
     });
 })));
 
-// function verify(issuer, profile, cb) {
-//   db.get('SELECT * FROM federated_credentials WHERE provider = ? AND subject = ?', [
-//     issuer,
-//     profile.id
-//   ], function(err, row) {
-//     if (err) { return cb(err); }
-//     if (!row) {
-//       db.run('INSERT INTO users (name) VALUES (?)', [
-//         profile.displayName
-//       ], function(err) {
-//         if (err) { return cb(err); }
-
-//         var id = this.lastID;
-//         db.run('INSERT INTO federated_credentials (user_id, provider, subject) VALUES (?, ?, ?)', [
-//           id,
-//           issuer,
-//           profile.id
-//         ], function(err) {
-//           if (err) { return cb(err); }
-//           var user = {
-//             id: id,
-//             name: profile.displayName
-//           };
-//           return cb(null, user);
-//         });
-//       });
-//     } else {
-//       db.get('SELECT * FROM users WHERE id = ?', [ row.user_id ], function(err, row) {
-//         if (err) { return cb(err); }
-//         if (!row) { return cb(null, false); }
-//         return cb(null, row);
-//       });
-//     }
-//   });
-// ));
 passport.serializeUser((user, cb) => {
   cb(null, user);
 });
@@ -81,6 +46,7 @@ passport.deserializeUser((user, cb) => {
   cb(null, user);
 });
 
+// Authorization routes
 const authRouter = express.Router();
 
 authRouter.get('/login', (req, res) => {
@@ -98,9 +64,9 @@ authRouter.get('/oauth2/redirect/google', passport.authenticate('google', {
 authRouter.post('/logout', (req, res, next) => {
   req.logout((err) => {
     if (err) { return next(err); }
-    console.log('in between if')
+    console.log('in between if');
     res.redirect('/login');
   });
 });
 
-module.exports = { authRouter, APIKEY };
+module.exports = { authRouter };

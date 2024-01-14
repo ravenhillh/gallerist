@@ -6,6 +6,7 @@ const logger = require('morgan');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
 const { authRouter } = require('./routes/auth');
+const { apiRouter } = require('./routes/api');
 require('dotenv').config();
 const { EXPRESS_SECRET } = process.env;
 
@@ -40,6 +41,9 @@ app.use(passport.authenticate('session'));
 
 // Authentication Routes
 app.use('/', authRouter);
+
+// Api Routes
+app.use('/', apiRouter);
 
 app.listen(3000, () => {
   console.log('gallerist server listening on port 3000. http://localhost:3000');
