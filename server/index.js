@@ -8,6 +8,7 @@ const MongoStore = require('connect-mongo');
 const { authRouter } = require('./routes/auth');
 require('dotenv').config();
 const { EXPRESS_SECRET } = process.env;
+
 // what routes will we need client side to access db
 // PUT req to udpate art documents with secondary get request
 // Req for adding art to users gallery POST
@@ -18,6 +19,7 @@ const app = express();
 app.set('views', path.resolve(__dirname, '../client/views'));
 app.set('view engine', 'ejs');
 
+// middleware
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,6 +38,7 @@ app.use(session({
 }));
 app.use(passport.authenticate('session'));
 
+// Authentication Routes
 app.use('/', authRouter);
 
 app.listen(3000, () => {

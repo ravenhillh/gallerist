@@ -3,7 +3,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, APIKEY } = process.env;
 const { User, Credentials } = require('../db/index');
 
 passport.use(new GoogleStrategy({
@@ -18,7 +18,7 @@ passport.use(new GoogleStrategy({
       console.log('User data ', data);
       cb(null, data);
       // if(data.length === 0) {
-      //   // insert into credentials db
+      // insert into credentials db
       //   User.create({
       //     username: String,
       //     name: profile.displayName
@@ -84,7 +84,7 @@ passport.deserializeUser((user, cb) => {
 const authRouter = express.Router();
 
 authRouter.get('/login', (req, res) => {
-  console.log('rendering login')
+  console.log('rendering login');
   res.render('login');
 });
 
@@ -103,4 +103,4 @@ authRouter.post('/logout', (req, res, next) => {
   });
 });
 
-module.exports = { authRouter };
+module.exports = { authRouter, APIKEY };
