@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBrowserRouter, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
 import Login from './Login';
 import Search from './Search';
@@ -9,12 +9,10 @@ const App = createBrowserRouter([
   {
     path: '/',
     element: <Search />,
-    children: [
-      {
-        path: 'login',
-        element: <Login />,
-      },
-    ],
+  },
+  {
+    path: 'login',
+    element: <Login />,
   },
   {
     path: 'gallery',
