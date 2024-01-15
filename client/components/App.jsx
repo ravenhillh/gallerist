@@ -1,21 +1,25 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
 import Login from './Login';
 import Search from './Search';
+import Gallery from './Gallery';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/">
-          <Route index element={<Search />} />
-          <Route path="login" element={<Login />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
-}
+const App = createBrowserRouter([
+  {
+    path: '/',
+    element: <Search />,
+  },
+  {
+    path: 'login',
+    element: <Login />,
+  },
+  {
+    path: 'gallery',
+    element: <Gallery />,
+  },
+
+]);
 
 // const [search, setSearch] = useState('');
 

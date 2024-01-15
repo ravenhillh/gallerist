@@ -44,7 +44,7 @@ const ArtSchema = new Schema({
 });
 
 const User = model('User', UserSchema);
-const Credentials = model('Credentials', CredentialsSchema);
+// const Credentials = model('Credentials', CredentialsSchema);
 const Art = model('Art', ArtSchema);
 
-module.exports = { User, Credentials, Art };
+module.exports = { User, Art };
