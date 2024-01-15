@@ -4,20 +4,49 @@ import { createBrowserRouter } from 'react-router-dom';
 import Login from './Login';
 import Search from './Search';
 import Gallery from './Gallery';
+import NavBar from './NavBar';
+import Auction from './Auction';
+import Profile from './Profile';
 
 const App = createBrowserRouter([
   {
     path: '/',
-    element: <Search />,
+    element: <NavBar />,
+    children: [
+      {
+        path: '/',
+        element: <Search />,
+      },
+      {
+        path: 'login',
+        element: <Login />,
+      },
+      {
+        path: 'profile',
+        element: <Profile />,
+      },
+      {
+        path: 'gallery',
+        element: <Gallery />,
+      },
+      {
+        path: 'auction',
+        element: <Auction />,
+      },
+    ],
   },
-  {
-    path: 'login',
-    element: <Login />,
-  },
-  {
-    path: 'gallery',
-    element: <Gallery />,
-  },
+  // {
+  //   path: '/',
+  //   element: <Search />,
+  // },
+  // {
+  //   path: 'login',
+  //   element: <Login />,
+  // },
+  // {
+  //   path: 'gallery',
+  //   element: <Gallery />,
+  // },
 
 ]);
 
