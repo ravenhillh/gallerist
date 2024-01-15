@@ -7,10 +7,17 @@ import { Link } from 'react-router-dom';
 
 function Search() {
   const [search, setSearch] = useState('');
+  // state images should be an array, useState should take in an empty array
+  // an array of objects, which has the image link, id (which will be set to key)
+  // useEffect(?) to load images on click of search button
+  const [images, setImages] = useState([]);
 
   function keywordSearch(term) {
     axios(`/huam/image/${term}`)
-      .then((response) => console.log('images: ', response.data))
+      .then((response) => {
+        console.log('images: ', response.data);
+        setImages(images.concat(response.data));
+      })
       .catch((err) => console.error(err));
   }
 
@@ -62,6 +69,22 @@ function Search() {
         <button type="submit">Sign out Pure HTML</button>
         {/* <input type="hidden" name="altbutton" value="altbutton" /> */}
       </form>
+      <ul>
+        {
+          images.map((image) => (
+            <li
+              key={image.id}
+            >
+              <img
+                style={{ width: '250px', height: 'auto' }}
+                src={image.baseimageurl}
+                alt="sky painting"
+                // onClick={console.log(img.id)}
+              />
+            </li>
+          ))
+        }
+      </ul>
     </div>
   );
 }
