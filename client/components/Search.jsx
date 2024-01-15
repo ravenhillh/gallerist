@@ -16,7 +16,7 @@ function Search() {
     axios(`/huam/image/${term}`)
       .then((response) => {
         console.log('images: ', response.data);
-        setImages(images.concat(response.data));
+        setImages(response.data);
       })
       .catch((err) => console.error(err));
   }
@@ -52,23 +52,6 @@ function Search() {
       >
         Search by imageid
       </button>
-      <Link to="gallery">Gallery</Link>
-      {/* <form
-        method="post"
-        onSubmit={() => {
-          axios.post('./logout')
-            .then((data) => console.log(data))
-            .catch((err) => console.log(err));
-        }}
-      >
-        <button type="submit">
-          Log out
-        </button>
-      </form> */}
-      <form action="/logout" method="post">
-        <button type="submit">Sign out Pure HTML</button>
-        {/* <input type="hidden" name="altbutton" value="altbutton" /> */}
-      </form>
       <ul>
         {
           images.map((image) => (
@@ -78,7 +61,7 @@ function Search() {
               <img
                 style={{ width: '250px', height: 'auto' }}
                 src={image.baseimageurl}
-                alt="sky painting"
+                alt={image.alttext}
                 // onClick={console.log(img.id)}
               />
             </li>
