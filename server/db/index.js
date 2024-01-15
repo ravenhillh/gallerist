@@ -13,20 +13,18 @@ mongoose.connect(db_uri)
 const UserSchema = new Schema({
   username: String,
   googleId: String,
-  hash: String,
-  salt: String,
   gallery: Object,
   friends: Array,
   wallet: Number,
 });
 UserSchema.plugin(findOrCreate);
 
-const CredentialsSchema = new Schema({
-  user_id: Number,
-  provider: String,
-  subject: String,
-});
-CredentialsSchema.plugin(findOrCreate);
+// const CredentialsSchema = new Schema({
+//   user_id: Number,
+//   provider: String,
+//   subject: String,
+// });
+// CredentialsSchema.plugin(findOrCreate);
 
 const ArtSchema = new Schema({
   title: String,
@@ -40,6 +38,7 @@ const ArtSchema = new Schema({
   imageId: Number,
   url: String,
   imageUrl: String,
+  userGallery: Object, // _id prop of user who has this particular painting in their gallery
   isForSale: Boolean,
   price: Number,
 });

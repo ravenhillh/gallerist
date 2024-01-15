@@ -1,12 +1,13 @@
 const express = require('express');
 const path = require('path');
-const ensureLogIn = require('connect-ensure-login').ensureLoggedIn();
+// const ensureLogIn = require('connect-ensure-login').ensureLoggedIn();
 const session = require('express-session');
 const logger = require('morgan');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
 const { authRouter } = require('./routes/auth');
 const { apiRouter } = require('./routes/api');
+const { dbRouter } = require('./routes/database');
 require('dotenv').config();
 const { EXPRESS_SECRET } = process.env;
 
@@ -44,6 +45,9 @@ app.use('/', authRouter);
 
 // Api Routes
 app.use('/', apiRouter);
+
+// DB Routes
+app.use('/', dbRouter);
 
 app.listen(3000, () => {
   console.log('gallerist server listening on port 3000. http://localhost:3000');
