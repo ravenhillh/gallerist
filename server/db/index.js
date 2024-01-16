@@ -35,7 +35,7 @@ const ArtSchema = new Schema({
   imageId: Number,
   url: String,
   imageUrl: String,
-  userGallery: Object, // _id prop of user who has this particular painting in their gallery
+  userGallery: Array,
   isForSale: Boolean,
   price: Number,
 });
