@@ -13,6 +13,7 @@ mongoose.connect(db_uri)
 const UserSchema = new Schema({
   username: String,
   googleId: String,
+  name: String,
   gallery: Object,
   friends: Array,
   wallet: Number,

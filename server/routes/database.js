@@ -4,6 +4,19 @@ const dbRouter = express.Router();
 
 const { User, Art } = require('../db/index');
 
+// GET: to return user's profile info upon load of Profile component
+
+dbRouter.get('/db/user/', (req, res) => (
+  User.findById(req.user.doc._id)
+    .then((userDoc) => {
+      res.status(200).send(userDoc);
+    })
+    .catch((err) => {
+      console.error('Could not find User by id: ', err);
+      res.sendStatus(500);
+    })
+));
+
 // USERS Routes: Update via a Put request
 // '/db/user/:id'
 dbRouter.put('/db/user/:id', (req, res) => {
