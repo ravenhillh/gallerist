@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
+import SearchItem from './SearchItem';
 
 // '/huam/object/:imageid' --For detailed object about image
 // '/huam/image/:keyword' --For an array of images
@@ -61,6 +62,7 @@ function Search() {
         onClick={() => {
           // console.log('keyword: ', search);
           keywordSearch(search);
+          setSearch('');
         }}
       >
         Search by Keyword
@@ -74,25 +76,10 @@ function Search() {
       >
         Search by imageid
       </button>
-      <ul>
+      <ul style={{ listStyleType: 'none' }}>
         {
           images.map((image) => (
-            <li
-              key={image.id}
-            >
-              <img
-                style={{ width: '250px', height: 'auto' }}
-                src={image.baseimageurl}
-                id={image.id}
-                alt={image.alttext}
-              />
-              <button
-                type="submit"
-                onClick={() => idSearch(image.id)}
-              >
-                ❤️
-              </button>
-            </li>
+            <SearchItem image={image} key={image.id} idSearch={idSearch} />
           ))
         }
       </ul>
