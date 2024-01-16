@@ -34,6 +34,17 @@ dbRouter.put('/db/user/:id', (req, res) => {
     });
 });
 
+dbRouter.get('/db/art/', (req, res) => {
+  Art.find({})
+    .then((docs) => {
+      res.status(200).send(docs);
+    })
+    .catch((err) => {
+      console.log('Failed to find Art: ', err);
+      res.sendStatus(500);
+    });
+});
+
 // ART Routes: create() via a Post needs to come once we have the full art obj
 // .deleteOne() via a Delete request
 // POST '/db/art/ ==> req.body will contain fields corresponding to Art Schema
