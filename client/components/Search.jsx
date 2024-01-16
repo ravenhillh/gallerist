@@ -37,15 +37,23 @@ function Search() {
   function keywordSearch(term) {
     axios(`/huam/image/${term}`)
       .then((response) => {
+        // console.log(response.status);
         setImages(response.data);
       })
-      .catch((err) => console.error(err.response.data));
+      .catch((err) => console.error(err));
   }
 
-  // onClick will call idSearch
+  // handleClick will call idSearch
   function idSearch(id) {
     axios(`/huam/object/${id}`)
-      .then(({ data }) => postToGallery(data[0]))
+      .then(({ data }) => {
+        // console.log(data);
+        if (data[0].images.length === 0) {
+          // console.log(': (');
+          return window.alert('Image backlog not found :(');
+        }
+        return postToGallery(data[0]);
+      })
       .catch((err) => console.error(err));
   }
   // handleClick function allows ability to pass down idSearch as props using useCallback
@@ -70,15 +78,6 @@ function Search() {
       >
         Search by Keyword
       </button>
-      <button
-        type="button"
-        onClick={() => {
-          // console.log('imageid: ', search);
-          idSearch(search);
-        }}
-      >
-        Search by imageid
-      </button>
       <ul style={{ listStyleType: 'none' }}>
         {
           images.map((image) => (
@@ -93,5 +92,15 @@ function Search() {
     </div>
   );
 }
+
+{/* <button
+type="button"
+onClick={() => {
+  // console.log('imageid: ', search);
+  idSearch(search);
+}}
+>
+Search by imageid
+</button> */}
 
 export default Search;
