@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function SearchItem({ image, idSearch }) {
   return (
@@ -20,5 +21,10 @@ function SearchItem({ image, idSearch }) {
     </li>
   );
 }
+
+SearchItem.propTypes = {
+  image: PropTypes.object.isRequired,
+  idSearch: PropTypes.func,
+};
 
 export default SearchItem;

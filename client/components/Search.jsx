@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
 import SearchItem from './SearchItem';
@@ -14,17 +14,17 @@ function Search() {
   // axios post request to user's gallery
   function postToGallery(artObj) {
     axios.post('/db/art', {
-      "art": {
-        "title": artObj.title,
-        "artist": artObj.people[0].displayname,
-        "date": artObj.dated,
-        "culture": artObj.culture,
-        "imageId": artObj.id,
-        "url": artObj.url,
-        "imageUrl": artObj.images[0].baseimageurl,
-        "isForSale": false, 
-        "price": 0,
-      }
+      art: {
+        title: artObj.title,
+        artist: artObj.people[0].displayname,
+        date: artObj.dated,
+        culture: artObj.culture,
+        imageId: artObj.id,
+        url: artObj.url,
+        imageUrl: artObj.images[0].baseimageurl,
+        isForSale: false,
+        price: 0,
+      },
     }).then(() => {
       console.log('succesfully posted to db');
       // redirect to gallery?
@@ -37,10 +37,9 @@ function Search() {
   function keywordSearch(term) {
     axios(`/huam/image/${term}`)
       .then((response) => {
-        // console.log('images: ', response.data);
         setImages(response.data);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err.response.data));
   }
 
   // onClick will call idSearch
@@ -49,6 +48,10 @@ function Search() {
       .then(({ data }) => postToGallery(data[0]))
       .catch((err) => console.error(err));
   }
+  // handleClick function allows ability to pass down idSearch as props using useCallback
+  const handleClick = useCallback((id) => {
+    idSearch(id);
+  });
 
   return (
     <div>
@@ -79,7 +82,11 @@ function Search() {
       <ul style={{ listStyleType: 'none' }}>
         {
           images.map((image) => (
-            <SearchItem image={image} key={image.id} idSearch={idSearch} />
+            <SearchItem
+              image={image}
+              key={image.id}
+              idSearch={handleClick}
+            />
           ))
         }
       </ul>
