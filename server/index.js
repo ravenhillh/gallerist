@@ -9,6 +9,7 @@ const { authRouter } = require('./routes/auth');
 const { apiRouter } = require('./routes/api');
 const { dbRouter } = require('./routes/database');
 require('dotenv').config();
+
 const { EXPRESS_SECRET } = process.env;
 
 // what routes will we need client side to access db
@@ -48,6 +49,10 @@ app.use('/', apiRouter);
 
 // DB Routes
 app.use('/', dbRouter);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 app.listen(3000, () => {
   console.log('gallerist server listening on port 3000. http://localhost:3000');
