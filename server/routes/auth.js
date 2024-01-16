@@ -12,23 +12,19 @@ passport.use(new GoogleStrategy({
   callbackURL: '/oauth2/redirect/google',
   scope: ['profile'],
 }, ((accessToken, refreshToken, profile, cb) => {
-  User.findOrCreate({ googleId: profile.id })
+  // console.log(profile);
+  User.findOrCreate({ googleId: profile.id, name: profile.displayName })
     .then((data) => {
-      // if / else block
-      console.log('User data ', data);
+      // console.log('User data ', data);
       cb(null, data);
-      // if(data.length === 0) {
-      // insert into credentials db
+
       //   User.create({
       //     username: String,
       //     name: profile.displayName
-      //     hash: String,
-      //     salt: String,
       //     gallery: Object,
       //     friends: Array,
       //     wallet: Number,
       //   })
-      // }
     })
     .catch((err) => {
       console.error(' ', err);
