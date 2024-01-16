@@ -4,13 +4,13 @@ import { NavLink, Outlet } from 'react-router-dom';
 function NavBar() {
   return (
     <nav>
-      <NavLink to="search" activeClassName="active">Search</NavLink>
+      <NavLink to="search">Search</NavLink>
       <br />
-      <NavLink to="profile" activeClassName="active">Profile</NavLink>
+      <NavLink to="profile">Profile</NavLink>
       <br />
-      <NavLink to="gallery" activeClassName="active">Gallery</NavLink>
+      <NavLink to="gallery">Gallery</NavLink>
       <br />
-      <NavLink to="auction" activeClassName="active">Auction</NavLink>
+      <NavLink to="auction">Auction</NavLink>
       <br />
       <form action="/logout" method="post">
         <button type="submit">Sign out</button>
