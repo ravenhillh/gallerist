@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 import GalleryListItem from './GalleryListItem';
@@ -17,13 +17,16 @@ function Gallery() {
   };
   // use an axios request to get a list of filtered images from art db based on friends or some key
   // pass in a word to filter by, possibly a friend's username
-  const getFilteredImages = (filter) => {
-    axios(`/db/art/${filter}`)
-      .then((art) => {
-        setImages(art);
-      })
-      .catch((err) => console.log(err));
-  };
+  const getFilteredImages = useCallback(
+    (filter) => {
+      axios(`/db/art/${filter}`)
+        .then((art) => {
+          setImages(art.data);
+        })
+        .catch((err) => console.log('get filtered images failed', err));
+    },
+    [images],
+  );
   // put the initial db request into useEffect to auto render images when you get to page
   useEffect(() => {
     get25RecentImages();
@@ -33,9 +36,13 @@ function Gallery() {
     <div>
       <h2>Gallery</h2>
       <ul>
-        {
-        images.map((image) => <GalleryListItem image={image} key={image.id} />)
-       }
+        {images.map((image) => (
+          <GalleryListItem
+            image={image}
+            getFilteredImages={getFilteredImages}
+            key={`${image.id}-${image.date}`}
+          />
+        ))}
       </ul>
     </div>
   );

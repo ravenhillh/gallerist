@@ -1,15 +1,31 @@
 import React from 'react';
+import axios from 'axios';
 
-function GalleryListItem({ image }) {
+function GalleryListItem({ image, getFilteredImages }) {
+  // send a request to the db to get all the images for one user
+  function getImagesByName() {
+    getFilteredImages(image.userGallery.name);
+  }
+  function addFriend() {
+    axios.put('/db/friends', { friend: image.userGallery.name })
+      .then(() => console.log('added friend!'))
+      .catch((err) => console.log(err, 'friend not added'));
+  }
   return (
     <div>
-      <h1>{image.title}</h1>
       <img
         style={{ width: '250px', height: 'auto' }}
         src={image.imageUrl}
         id={image.imageId}
         alt={image.title}
       />
+      <h1>Title: {image.title}</h1>
+      <div>Artist: {image.artist}</div>
+      <div>Date: {image.date}</div>
+      <div onClick={getImagesByName}>
+        User:
+        {image.userGallery.name}
+      </div>
     </div>
   );
 }
