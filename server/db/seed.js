@@ -5,7 +5,7 @@ const seedMongo = () => Art.deleteMany({})
   .then(({ deletedCount }) => {
     // first tells us how many deleted if it succeeded in deleting
     console.log(
-      ` Database (MongoDB): ${deletedCount} 'Tasks' have been removed from the 'Gallerist' database `,
+      ` Database (MongoDB): ${deletedCount} 'artworks' have been removed from the 'Gallerist' database `,
     );
     // seed it with sample data
     return Art.insertMany(hardcodedArtObjs);
