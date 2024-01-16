@@ -66,9 +66,27 @@ dbRouter.post('/db/art', (req, res) => {
   isForSale: False, //initialize to false
   */
   Art.create(art)
-    .then((createOjb) => {
-      console.log('Post data (createObj) to Art: ', createOjb);
-      res.sendStatus(201);
+    .then((createObj) => {
+      // console.log('Post data (createObj) to Art: ', createObj);
+
+      // destructure relevant user info from request
+      const { name, googleId } = req.user.doc;
+      // find art object that was just added to db and update with user that just sent request
+      Art.findByIdAndUpdate(createObj._id, { userGallery: { name, googleId } })
+        .then((updObj) => {
+          // console.log('Just created artObj updObj: ', updObj);
+
+          // find user record and push art object to gallery array
+          User.findOneAndUpdate({ googleId }, { $push: { gallery: art } })
+            .then((userUpdObj) => {
+              // console.log('User update Obj: ', userUpdObj);
+
+              // finally send 201 status in response if following db queries were successful
+              res.sendStatus(201);
+            })
+            .catch((err) => console.error('post /db/art user update: ', err));
+        })
+        .catch((err) => console.error('post /db/art Art update: ', err));
       // res.sendStatus(404); //when we figure out what updObj looks like
     })
     .catch((err) => {
