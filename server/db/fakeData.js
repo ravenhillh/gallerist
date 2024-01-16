@@ -1,9 +1,9 @@
 require('dotenv').config();
 
-const { GOOGLEID } = process.env;
+const { GOOGLENAME, GOOGLEID } = process.env;
 
 const yourProfile = {
-  name: 'Robert Frank',
+  name: GOOGLENAME,
   googleId: GOOGLEID,
 };
 
