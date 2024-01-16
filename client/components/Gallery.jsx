@@ -40,7 +40,7 @@ function Gallery() {
           <GalleryListItem
             image={image}
             getFilteredImages={getFilteredImages}
-            key={`${image.id}-${image.date}`}
+            key={`${image.imageId}-${image.date}`}
           />
         ))}
       </ul>
