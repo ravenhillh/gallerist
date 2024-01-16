@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
+import GalleryListItem from './GalleryListItem';
 
 function Gallery() {
   // use useState to define an images array and method to store and update gallery images
@@ -8,6 +10,7 @@ function Gallery() {
   const get25RecentImages = () => {
     axios('/db/art')
       .then((art) => {
+        console.log(art);
         setImages(art.data);
       })
       .catch((err) => console.log(err));
@@ -21,14 +24,18 @@ function Gallery() {
       })
       .catch((err) => console.log(err));
   };
+  // put the initial db request into useEffect to auto render images when you get to page
+  useEffect(() => {
+    get25RecentImages();
+  }, []);
 
   return (
     <div>
       <h2>Gallery</h2>
       <ul>
-        {/* {
-        images.map((image) => <GalleryListItem image={image} />)
-       } */}
+        {
+        images.map((image) => <GalleryListItem image={image} key={image.id} />)
+       }
       </ul>
     </div>
   );
