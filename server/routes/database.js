@@ -38,7 +38,7 @@ dbRouter.put('/db/user/:id', (req, res) => {
 // .deleteOne() via a Delete request
 // POST '/db/art/ ==> req.body will contain fields corresponding to Art Schema
 dbRouter.post('/db/art', (req, res) => {
-  const artObj = req.body;
+  const { art } = req.body;
   /**
    * All of these fields are available in art object returned from GET: 'huam/object/:id'
   title: String,
@@ -54,7 +54,7 @@ dbRouter.post('/db/art', (req, res) => {
   imageUrl: String,
   isForSale: False, //initialize to false
   */
-  Art.create(artObj)
+  Art.create(art)
     .then((createOjb) => {
       console.log('Post data (createObj) to Art: ', createOjb);
       res.sendStatus(201);

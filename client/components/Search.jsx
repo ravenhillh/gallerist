@@ -10,22 +10,27 @@ function Search() {
   // state images array
   const [images, setImages] = useState([]);
 
+  // axios post request to user's gallery
   function postToGallery(artObj) {
-    // axios post
     axios.post('/db/art', {
-      'art': {
-        'title': artObj.title,
-        'artist': artObj.people.displayname,
-        'date': artObj.dated,
-        'culture': artObj.culture,
-        'imageId': artObj.id,
-        'url': artObj.url,
-        'imageUrl': artObj.primaryimageurl,
-        'isForSale': false, 
-        'price': 0,
+      "art": {
+        "title": artObj.title,
+        "artist": artObj.people[0].displayname,
+        "date": artObj.dated,
+        "culture": artObj.culture,
+        "imageId": artObj.id,
+        "url": artObj.url,
+        "imageUrl": artObj.images[0].baseimageurl,
+        "isForSale": false, 
+        "price": 0,
       }
-    }).then()
-      .catch();
+    }).then(() => {
+      console.log('succesfully posted to db');
+      // redirect to gallery?
+    })
+      .catch((err) => {
+        console.error('Could not post to gallery ', err);
+      });
   }
 
   function keywordSearch(term) {
@@ -40,12 +45,7 @@ function Search() {
   // onClick will call idSearch
   function idSearch(id) {
     axios(`/huam/object/${id}`)
-      .then(({ data }) => {
-        console.log('obj: ', data);
-        console.log('title ', data[0].title);
-        // add post to db function here
-        // postToGallery(data[0]);
-      })
+      .then(({ data }) => postToGallery(data[0]))
       .catch((err) => console.error(err));
   }
 
