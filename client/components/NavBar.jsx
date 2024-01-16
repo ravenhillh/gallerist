@@ -3,20 +3,20 @@ import { NavLink, Outlet } from 'react-router-dom';
 
 function NavBar() {
   return (
-    <div>
-      <NavLink to="search">Search</NavLink>
+    <nav>
+      <NavLink to="search" activeClassName="active">Search</NavLink>
       <br />
-      <NavLink to="profile">Profile</NavLink>
+      <NavLink to="profile" activeClassName="active">Profile</NavLink>
       <br />
-      <NavLink to="gallery">Gallery</NavLink>
+      <NavLink to="gallery" activeClassName="active">Gallery</NavLink>
       <br />
-      <NavLink to="auction">Auction</NavLink>
+      <NavLink to="auction" activeClassName="active">Auction</NavLink>
       <br />
       <form action="/logout" method="post">
         <button type="submit">Sign out</button>
       </form>
       <Outlet />
-    </div>
+    </nav>
   );
 }
 
