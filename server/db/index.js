@@ -29,11 +29,7 @@ UserSchema.plugin(findOrCreate);
 const ArtSchema = new Schema({
   title: String,
   artist: String,
-  artistDate: String,
-  altText: String,
-  description: String,
-  century: String,
-  date: Number,
+  date: String,
   culture: String,
   imageId: Number,
   url: String,
