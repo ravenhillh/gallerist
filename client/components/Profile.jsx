@@ -17,7 +17,17 @@ function Profile() {
   );
 
   const artDiv = gallery
-    ? <div>You have `Object.entries(gallery).length` artworks.</div>
+    ? (
+      <ul>
+        {gallery.map((art, i) => (
+          <li key={`${art}-${i}`}>
+            <a href={art.imageUrl}>{art.title}</a>
+            {' - '}
+            {art.artist}
+          </li>
+        ))}
+      </ul>
+    )
     : <div>You have 0 artworks.</div>;
 
   return (
