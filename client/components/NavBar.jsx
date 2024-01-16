@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import React from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
 
 function NavBar() {
   return (
     <div>
-      <Link to="profile">Profile</Link>
+      <NavLink to="search">Search</NavLink>
       <br />
-      <Link to="gallery">Gallery</Link>
+      <NavLink to="profile">Profile</NavLink>
       <br />
-      <Link to="auction">Auction</Link>
+      <NavLink to="gallery">Gallery</NavLink>
+      <br />
+      <NavLink to="auction">Auction</NavLink>
       <br />
       <form action="/logout" method="post">
         <button type="submit">Sign out</button>
