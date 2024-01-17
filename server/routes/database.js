@@ -37,7 +37,7 @@ dbRouter.put('/db/user/:id', (req, res) => {
   const fieldsToUpdate = req.body; // gallery: {imageid: artObj}
   User.findByIdAndUpdate(id, fieldsToUpdate)
     .then((updObj) => {
-      console.log('Put data (updObj) by user ID: ', updObj);
+      // console.log('Put data (updObj) by user ID: ', updObj);
       res.sendStatus(200);
       // res.sendStatus(404); //when we figure out what updObj looks like
     })
@@ -78,7 +78,6 @@ dbRouter.get('/db/art/:user', (req, res) => {
   const { user } = req.params;
   Art.find({ 'userGallery.name': user })
     .then((userArt) => {
-      // console.log('user art: ', userArt);
       if (userArt.length) {
         res.status(200).send(userArt);
       } else {
@@ -92,14 +91,13 @@ dbRouter.get('/db/art/:user', (req, res) => {
 });
 
 dbRouter.put('/db/art/:imageId', (req, res) => {
-  console.log(req.user.doc)
   const { imageId } = req.params;
   const { googleId, name } = req.user.doc;
   const fieldsToUpdate = req.body;
   Art.findOneAndUpdate(
     { imageId },
     { ...fieldsToUpdate, userGallery: { name, googleId } },
-    { new: true },
+    { new: true }
   )
     .then((updObj) => {
       if (updObj) {
@@ -109,7 +107,7 @@ dbRouter.put('/db/art/:imageId', (req, res) => {
       }
     })
     .catch((err) => {
-      console.log('Failed to Update art by imageId: ', err);
+      console.error('Failed to Update art by imageId: ', err);
     });
 });
 
@@ -129,22 +127,47 @@ dbRouter.delete('/db/art/:imageId', (req, res) => {
     });
 });
 
-//PUT request to update User's friend array
+// PUT request to update User's friend array
 dbRouter.put('/db/friends/', (req, res) => {
-  console.log(req.body)
   const { friend } = req.body; // req.body should be { friend: `friend's name` }
   const { googleId } = req.user.doc;
-  User.findOneAndUpdate({ googleId }, { $push: { friends: friend } })
-    .then((updObj) => {
-      console.log('updObj for adding friend: ', updObj);
-      res.sendStatus(200);
-      // if (updObj) {
-      // } else {
-      //   res.sendStatus(404);
-      // }
+  User.findOne({ googleId })
+    // , { $push: { friends: friend } })
+    .then((user) => {
+      if (user.name !== friend && !user.friends.includes(friend)) {
+        User.findByIdAndUpdate(
+          user._id,
+          { $push: { friends: friend } },
+          { new: true },
+        )
+          .then((updObj) => {
+            res.sendStatus(200);
+          });
+      } else {
+        res.sendStatus(204);
+      }
     })
     .catch((err) => {
-      console.log('Failed to update user friend array: ', err);
+      console.error('Failed to update user friend array: ', err);
+      res.sendStatus(500);
+    });
+});
+
+// PUT request to remove friend from friends' list
+dbRouter.put('/db/unfriend/', (req, res) => {
+  const { friend } = req.body;
+  const { googleId } = req.user.doc;
+  User.findOne({ googleId })
+    .then((user) => {
+      const idx = user.friends.indexOf(friend);
+      user.friends.splice(idx, 1);
+      User.findOneAndUpdate(user._id, { friends: user.friends }, { new: true })
+        .then(() => {
+          res.sendStatus(200);
+        });
+    })
+    .catch((err) => {
+      console.error('Failed to Put update to friend list: ', err);
       res.sendStatus(500);
     });
 });

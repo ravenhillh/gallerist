@@ -7,6 +7,8 @@ function Profile() {
   const [friends, setFriends] = useState([]);
   const [gallery, setGallery] = useState([]);
 
+  const [reload, setReload] = useState(false);
+
   // Get request to return User profile, sets name and friends State
   function getProfile() {
     return axios
@@ -34,6 +36,13 @@ function Profile() {
     getUserGallery();
   }, []);
 
+  // Re-render component when User document changes, i.e. friend deleted
+  useEffect(() => {
+    if (reload) {
+      getProfile();
+    }
+  }, [reload]);
+
   // const [price, setPrice] = useState(0);
 
   // Updates art object by changing isForSale field to true
@@ -45,6 +54,13 @@ function Profile() {
       })
       .then(() => getUserGallery())
       .catch((err) => console.error('Could not Put update on artwork: ', err));
+  }
+
+  // Delete friend from friends' array on User document
+  function unFriend(event) {
+    axios.put('db/unfriend/', { friend: event.target.value })
+      .then(() => setReload(true))
+      .catch((err) => console.error('Could not unfriend: ', err));
   }
 
   // Deletes art object, then updates gallery State by invoking getUserGallery
@@ -59,7 +75,12 @@ function Profile() {
   const friendsDiv = friends.length ? (
     <ul>
       {friends.map((pal, i) => (
-        <li key={`${pal}-${i}`}>{pal}</li>
+        <li key={`${pal}-${i}`}>
+          {pal}
+          <button type="button" value={pal} onClick={unFriend}>
+            X
+          </button>
+        </li>
       ))}
     </ul>
   ) : (
