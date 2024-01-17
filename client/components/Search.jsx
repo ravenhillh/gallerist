@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
 import SearchItem from './SearchItem';
@@ -37,7 +37,7 @@ function Search() {
   function keywordSearch(term) {
     axios(`/huam/image/${term}`)
       .then((response) => {
-        // console.log(response.status);
+        // console.log(response);
         setImages(response.data);
       })
       .catch((err) => console.error(err));
@@ -50,7 +50,7 @@ function Search() {
         // console.log(data);
         if (data[0].images.length === 0) {
           // console.log(': (');
-          return window.alert('Image backlog not found :(');
+          alert('Sorry this piece is no longer available');
         }
         return postToGallery(data[0]);
       })
@@ -60,6 +60,10 @@ function Search() {
   const handleClick = useCallback((id) => {
     idSearch(id);
   });
+
+  useEffect(() => {
+    keywordSearch('dog');
+  }, []);
 
   return (
     <div>
