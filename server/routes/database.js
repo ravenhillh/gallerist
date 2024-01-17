@@ -49,6 +49,7 @@ dbRouter.put('/db/user/:id', (req, res) => {
 
 // GETs all Art documents from Art table in database
 dbRouter.get('/db/art/', (req, res) => {
+  console.log('testing')
   Art.find({})
     .then((docs) => {
       res.status(200).send(docs);
@@ -76,7 +77,7 @@ dbRouter.get('db/userArt/', (req, res) => {
 // GET all art based on :user Filter, returns all art documents of user
 // *** based on 'name' property of userGallery obj ***
 dbRouter.get('/db/art/:user', (req, res) => {
-  console.log(req.user);
+  console.log('/db/art/:user ', req.user);
   const { user } = req.params;
   Art.find({ 'userGallery.name': user })
     .then((userArt) => {
