@@ -14,7 +14,7 @@ const UserSchema = new Schema({
   username: String,
   googleId: String,
   name: String,
-  gallery: Array,
+  // gallery: Array,
   friends: Array,
   wallet: Number,
 });

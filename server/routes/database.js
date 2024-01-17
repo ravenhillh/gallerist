@@ -138,11 +138,10 @@ dbRouter.put('/db/friends/', (req, res) => {
         User.findByIdAndUpdate(
           user._id,
           { $push: { friends: friend } },
-          { new: true },
-        )
-          .then((updObj) => {
-            res.sendStatus(200);
-          });
+          { new: true }
+        ).then((updObj) => {
+          res.sendStatus(200);
+        });
       } else {
         res.sendStatus(204);
       }
@@ -161,10 +160,13 @@ dbRouter.put('/db/unfriend/', (req, res) => {
     .then((user) => {
       const idx = user.friends.indexOf(friend);
       user.friends.splice(idx, 1);
-      User.findOneAndUpdate(user._id, { friends: user.friends }, { new: true })
-        .then(() => {
-          res.sendStatus(200);
-        });
+      User.findOneAndUpdate(
+        user._id,
+        { friends: user.friends },
+        { new: true }
+      ).then(() => {
+        res.sendStatus(200);
+      });
     })
     .catch((err) => {
       console.error('Failed to Put update to friend list: ', err);
@@ -188,7 +190,21 @@ dbRouter.get('/db/auction/', (req, res) => {
 // .deleteOne() via a Delete request
 // POST '/db/art/ ==> req.body will contain fields corresponding to Art Schema
 dbRouter.post('/db/art', (req, res) => {
+  // destructure relevant user info from request
+  const { name, googleId } = req.user.doc;
   const { art } = req.body;
+
+  // Spread contents of art object from req.body into document creation object,
+  // along with userGallery field to associate with user that is curating this artwork
+  Art.create({ ...art, userGallery: { name, googleId } })
+    .then(() => {
+      // send 201 status in response
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.error('Failed to create Art document: ', err);
+      res.sendStatus(500);
+    });
   /**
    * All of these fields are available in art object returned from GET: 'huam/object/:id'
   title: String,
@@ -204,34 +220,6 @@ dbRouter.post('/db/art', (req, res) => {
   imageUrl: String,
   isForSale: False, //initialize to false
   */
-  Art.create(art)
-    .then((createObj) => {
-      console.log('Post data (createObj) to Art: ', createObj);
-
-      // destructure relevant user info from request
-      const { name, googleId } = req.user.doc;
-      // find art object that was just added to db and update with user that just sent request
-      Art.findByIdAndUpdate(createObj._id, { userGallery: { name, googleId } })
-        .then((updObj) => {
-          // console.log('Just created artObj updObj: ', updObj);
-
-          // find user record and push art object to gallery array
-          User.findOneAndUpdate({ googleId }, { $push: { gallery: art } })
-            .then((userUpdObj) => {
-              // console.log('User update Obj: ', userUpdObj);
-
-              // finally send 201 status in response if following db queries were successful
-              res.sendStatus(201);
-            })
-            .catch((err) => console.error('post /db/art user update: ', err));
-        })
-        .catch((err) => console.error('post /db/art Art update: ', err));
-      // res.sendStatus(404); //when we figure out what updObj looks like
-    })
-    .catch((err) => {
-      console.error('Failed to create Art document: ', err);
-      res.sendStatus(500);
-    });
 });
 
 module.exports = { dbRouter };
