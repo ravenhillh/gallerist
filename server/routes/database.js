@@ -49,7 +49,6 @@ dbRouter.put('/db/user/:id', (req, res) => {
 
 // GETs all Art documents from Art table in database
 dbRouter.get('/db/art/', (req, res) => {
-  console.log('testing')
   Art.find({})
     .then((docs) => {
       res.status(200).send(docs);
@@ -61,8 +60,7 @@ dbRouter.get('/db/art/', (req, res) => {
 });
 
 // GET all Art based on user sending request
-dbRouter.get('db/userArt/', (req, res) => {
-  // console.log(req.user);
+dbRouter.get('/db/userArt/', (req, res) => {
   const { googleId } = req.user.doc;
   Art.find({ 'userGallery.googleId': googleId })
     .then((docs) => {
@@ -77,7 +75,6 @@ dbRouter.get('db/userArt/', (req, res) => {
 // GET all art based on :user Filter, returns all art documents of user
 // *** based on 'name' property of userGallery obj ***
 dbRouter.get('/db/art/:user', (req, res) => {
-  console.log('/db/art/:user ', req.user);
   const { user } = req.params;
   Art.find({ 'userGallery.name': user })
     .then((userArt) => {
@@ -96,13 +93,22 @@ dbRouter.get('/db/art/:user', (req, res) => {
 
 dbRouter.put('/db/art/:imageId', (req, res) => {
   const { imageId } = req.params;
+  const { googleId, name } = req.user.doc;
   const fieldsToUpdate = req.body;
-  Art.findOneAndUpdate({ imageId }, fieldsToUpdate, { new: true })
-    .then((data) => {
-      console.log(data);
+  Art.findOneAndUpdate(
+    { imageId },
+    { ...fieldsToUpdate, userGallery: { name, googleId } },
+    { new: true },
+  )
+    .then((updObj) => {
+      if (updObj) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(404);
+      }
     })
     .catch((err) => {
-      console.log(err);
+      console.log('Failed to Update art by imageId: ', err);
     });
 });
 
