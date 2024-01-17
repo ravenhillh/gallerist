@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
+import SearchItem from './SearchItem';
 
 // '/huam/object/:imageid' --For detailed object about image
 // '/huam/image/:keyword' --For an array of images
@@ -13,17 +14,17 @@ function Search() {
   // axios post request to user's gallery
   function postToGallery(artObj) {
     axios.post('/db/art', {
-      "art": {
-        "title": artObj.title,
-        "artist": artObj.people[0].displayname,
-        "date": artObj.dated,
-        "culture": artObj.culture,
-        "imageId": artObj.id,
-        "url": artObj.url,
-        "imageUrl": artObj.images[0].baseimageurl,
-        "isForSale": false, 
-        "price": 0,
-      }
+      art: {
+        title: artObj.title,
+        artist: artObj.people[0].displayname,
+        date: artObj.dated,
+        culture: artObj.culture,
+        imageId: artObj.id,
+        url: artObj.url,
+        imageUrl: artObj.images[0].baseimageurl,
+        isForSale: false,
+        price: 0,
+      },
     }).then(() => {
       console.log('succesfully posted to db');
       // redirect to gallery?
@@ -36,18 +37,29 @@ function Search() {
   function keywordSearch(term) {
     axios(`/huam/image/${term}`)
       .then((response) => {
-        // console.log('images: ', response.data);
+        // console.log(response.status);
         setImages(response.data);
       })
       .catch((err) => console.error(err));
   }
 
-  // onClick will call idSearch
+  // handleClick will call idSearch
   function idSearch(id) {
     axios(`/huam/object/${id}`)
-      .then(({ data }) => postToGallery(data[0]))
+      .then(({ data }) => {
+        // console.log(data);
+        if (data[0].images.length === 0) {
+          // console.log(': (');
+          return window.alert('Image backlog not found :(');
+        }
+        return postToGallery(data[0]);
+      })
       .catch((err) => console.error(err));
   }
+  // handleClick function allows ability to pass down idSearch as props using useCallback
+  const handleClick = useCallback((id) => {
+    idSearch(id);
+  });
 
   return (
     <div>
@@ -61,43 +73,34 @@ function Search() {
         onClick={() => {
           // console.log('keyword: ', search);
           keywordSearch(search);
+          setSearch('');
         }}
       >
         Search by Keyword
       </button>
-      <button
-        type="button"
-        onClick={() => {
-          // console.log('imageid: ', search);
-          idSearch(search);
-        }}
-      >
-        Search by imageid
-      </button>
-      <ul>
+      <ul style={{ listStyleType: 'none' }}>
         {
           images.map((image) => (
-            <li
+            <SearchItem
+              image={image}
               key={image.id}
-            >
-              <img
-                style={{ width: '250px', height: 'auto' }}
-                src={image.baseimageurl}
-                id={image.id}
-                alt={image.alttext}
-              />
-              <button
-                type="submit"
-                onClick={() => idSearch(image.id)}
-              >
-                ❤️
-              </button>
-            </li>
+              idSearch={handleClick}
+            />
           ))
         }
       </ul>
     </div>
   );
 }
+
+{/* <button
+type="button"
+onClick={() => {
+  // console.log('imageid: ', search);
+  idSearch(search);
+}}
+>
+Search by imageid
+</button> */}
 
 export default Search;
