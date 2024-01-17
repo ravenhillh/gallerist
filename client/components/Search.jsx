@@ -37,7 +37,7 @@ function Search() {
   function keywordSearch(term) {
     axios(`/huam/image/${term}`)
       .then((response) => {
-        // console.log(response);
+        // console.log(response.data);
         setImages(response.data);
       })
       .catch((err) => console.error(err));
@@ -96,15 +96,5 @@ function Search() {
     </div>
   );
 }
-
-{/* <button
-type="button"
-onClick={() => {
-  // console.log('imageid: ', search);
-  idSearch(search);
-}}
->
-Search by imageid
-</button> */}
 
 export default Search;
