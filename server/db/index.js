@@ -32,7 +32,10 @@ const ArtSchema = new Schema({
   artist: String,
   date: String,
   culture: String,
-  imageId: Number,
+  imageId: {
+    type: Number,
+    unique: true,
+  },
   url: String,
   imageUrl: String,
   userGallery: Object,
