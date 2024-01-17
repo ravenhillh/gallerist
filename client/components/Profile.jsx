@@ -34,11 +34,11 @@ function Profile() {
     getUserGallery();
   }, []);
 
-  const [price, setPrice] = useState(0);
+  // const [price, setPrice] = useState(0);
 
   // Updates art object by changing isForSale field to true
   function putSale(event) {
-    setPrice(prompt('Set a price:'));
+    // setPrice(prompt('Set a price:'));
     axios
       .put(`/db/art/${event.target.value}`, {
         isForSale: true,

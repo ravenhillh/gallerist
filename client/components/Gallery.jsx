@@ -20,7 +20,7 @@ function Gallery() {
   const get25RecentImages = () => {
     axios('/db/art')
       .then((art) => {
-        console.log(art);
+        // console.log(art);
         setImages(art.data);
       })
       .catch((err) => console.log(err));
