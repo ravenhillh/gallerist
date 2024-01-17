@@ -3,8 +3,9 @@ import axios from 'axios';
 
 function GalleryListItem({ image }) {
   // add a friend to users friend array
-  function addFriend(name) {
-    axios.put('/db/friends/', { friend: name })
+  function addFriend(e) {
+    // console.log(e.target.value)
+    axios.put('/db/friends/', { friend: e.target.value })
       .then(() => console.log('added friend!'))
       .catch((err) => console.log(err, 'friend not added'));
   }
@@ -32,11 +33,10 @@ function GalleryListItem({ image }) {
         {' '}
         {image.date}
       </div>
-      <div
-        onClick={() => {
-          addFriend(image.userGallery.name)
-        }}
-      >
+      <button value={image.userGallery.name} type="button" onClick={addFriend}>
+        Add Friend
+      </button>
+      <div>
         User:
         {' '}
         {image.userGallery.name}
