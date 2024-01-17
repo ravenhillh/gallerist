@@ -14,7 +14,7 @@ const UserSchema = new Schema({
   username: String,
   googleId: String,
   name: String,
-  gallery: Object,
+  gallery: Array,
   friends: Array,
   wallet: Number,
 });
@@ -35,7 +35,7 @@ const ArtSchema = new Schema({
   imageId: Number,
   url: String,
   imageUrl: String,
-  userGallery: Array,
+  userGallery: Object,
   isForSale: Boolean,
   price: Number,
 });
