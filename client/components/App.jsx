@@ -9,10 +9,10 @@ import NavBar from './NavBar';
 import Auction from './Auction';
 import Profile from './Profile';
 
-function getProfile() {
-  return axios.get('/db/user/')
+function getAuction() {
+  return axios.get('/db/auction/')
     .then((response) => response.data)
-    .catch((err) => console.error(err));
+    .catch((err) => console.error('Could not GET auction items: ', err));
 }
 
 const App = createBrowserRouter([
@@ -35,7 +35,6 @@ const App = createBrowserRouter([
       {
         path: 'profile',
         element: <Profile />,
-        loader: getProfile,
       },
       {
         path: 'gallery',
@@ -44,6 +43,7 @@ const App = createBrowserRouter([
       {
         path: 'auction',
         element: <Auction />,
+        loader: getAuction,
       },
     ],
   },

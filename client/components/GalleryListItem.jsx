@@ -35,7 +35,7 @@ function GalleryListItem({ image }) {
       <div>
         User:
         {' '}
-        {image.userGallery[0].name}
+        {image.userGallery.name}
       </div>
     </div>
   );
