@@ -34,15 +34,16 @@ function Profile() {
     getUserGallery();
   }, []);
 
-  // const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(0);
 
   // Updates art object by changing isForSale field to true
   function putSale(event) {
-    // setPrice(prompt('Set a price:'));
+    setPrice(prompt('Set a price:'));
     axios
       .put(`/db/art/${event.target.value}`, {
         isForSale: true,
       })
+      .then(() => getUserGallery())
       .catch((err) => console.error('Could not Put update on artwork: ', err));
   }
 
@@ -50,7 +51,7 @@ function Profile() {
   function deleteArt(event) {
     axios
       .delete(`/db/art/${event.target.value}`)
-      .then(() => getUserGallery(name))
+      .then(() => getUserGallery())
       .catch((err) => console.error('Could not Delete art: ', err));
   }
 

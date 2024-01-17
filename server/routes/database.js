@@ -93,13 +93,22 @@ dbRouter.get('/db/art/:user', (req, res) => {
 
 dbRouter.put('/db/art/:imageId', (req, res) => {
   const { imageId } = req.params;
+  const { googleId, name } = req.user.doc;
   const fieldsToUpdate = req.body;
-  Art.findOneAndUpdate({ imageId }, fieldsToUpdate, { new: true })
-    .then((data) => {
-      console.log(data);
+  Art.findOneAndUpdate(
+    { imageId },
+    { ...fieldsToUpdate, userGallery: { name, googleId } },
+    { new: true },
+  )
+    .then((updObj) => {
+      if (updObj) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(404);
+      }
     })
     .catch((err) => {
-      console.log(err);
+      console.log('Failed to Update art by imageId: ', err);
     });
 });
 
