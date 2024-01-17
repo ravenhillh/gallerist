@@ -92,6 +92,7 @@ dbRouter.get('/db/art/:user', (req, res) => {
 });
 
 dbRouter.put('/db/art/:imageId', (req, res) => {
+  console.log(req.user.doc)
   const { imageId } = req.params;
   const { googleId, name } = req.user.doc;
   const fieldsToUpdate = req.body;
@@ -130,9 +131,10 @@ dbRouter.delete('/db/art/:imageId', (req, res) => {
 
 //PUT request to update User's friend array
 dbRouter.put('/db/friends/', (req, res) => {
+  console.log(req.body)
   const { friend } = req.body; // req.body should be { friend: `friend's name` }
-  const { _id } = req.user.doc;
-  User.findByIdAndUpdate(_id, { $push: { friends: friend } })
+  const { googleId } = req.user.doc;
+  User.findOneAndUpdate({ googleId }, { $push: { friends: friend } })
     .then((updObj) => {
       console.log('updObj for adding friend: ', updObj);
       res.sendStatus(200);

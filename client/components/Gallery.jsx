@@ -20,7 +20,7 @@ function Gallery() {
   const get25RecentImages = () => {
     axios('/db/art')
       .then((art) => {
-        console.log(art);
+        // console.log(art);
         setImages(art.data);
       })
       .catch((err) => console.log(err));
@@ -49,6 +49,7 @@ function Gallery() {
       <div className="users" style={{ position: 'absolute', right: 0 }}>
         <h3 className="section-header text-center">Users</h3>
         <select className="users" onChange={(e) => getFilteredImages(e.target.value)}>
+          <option value="all" key="54321">All</option>
           <option
             value="Artie McBuyer"
             key="12345"
@@ -56,10 +57,10 @@ function Gallery() {
             Artie McBuyer
           </option>
           {
-          usersArray.map((user) => (
+          usersArray.map((user, i) => (
             <option
               value={user.name}
-              key={`${user.googleId}`}
+              key={`${user.googleId}-${i}`}
             >
               {user.name}
             </option>
