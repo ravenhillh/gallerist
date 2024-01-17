@@ -19,9 +19,9 @@ function Profile() {
   }
 
   // Get request to return Art documents connected to User, sets gallery State
-  function getUserGallery(name) {
+  function getUserGallery() {
     return axios
-      .get(`/db/userArt/`)
+      .get('/db/userArt/')
       .then(({ data }) => {
         setGallery(data);
       })
@@ -31,7 +31,7 @@ function Profile() {
   // Initializing state on first render
   useEffect(() => {
     getProfile();
-    getUserGallery(name);
+    getUserGallery();
   }, []);
 
   // const [price, setPrice] = useState(0);
