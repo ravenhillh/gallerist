@@ -7,6 +7,7 @@ import Gallery from './Gallery';
 import NavBar from './NavBar';
 import Auction from './Auction';
 import Profile from './Profile';
+import Home from './Home';
 
 const App = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const App = createBrowserRouter([
         element: <Auction />,
       },
     ],
+  },
+  {
+    path: '/home',
+    element: <Home />,
   },
 ]);
 

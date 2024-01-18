@@ -170,10 +170,6 @@ dbRouter.post('/db/art', (req, res) => {
    * All of these fields are available in art object returned from GET: 'huam/object/:id'
   title: String,
   artist: String,
-  artistDate: String,
-  altText: String,
-  description: String,
-  century: String,
   date: Number,
   culture: String,
   imageId: Number,
@@ -181,6 +177,7 @@ dbRouter.post('/db/art', (req, res) => {
   imageUrl: String,
   isForSale: False, //initialize to false
   */
+  // check for art obj in db
   Art.create(art)
     .then((createObj) => {
       console.log('Post data (createObj) to Art: ', createObj);
