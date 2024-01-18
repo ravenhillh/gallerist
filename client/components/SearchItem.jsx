@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from 'react-bootstrap/Button';
 
 function SearchItem({ image, idSearch }) {
   return (
@@ -12,12 +13,13 @@ function SearchItem({ image, idSearch }) {
         id={image.id}
         alt={image.alttext}
       />
-      <button
+      <Button
+        variant="outline"
         type="submit"
         onClick={() => idSearch(image.id)}
       >
         ❤️
-      </button>
+      </Button>
     </li>
   );
 }
