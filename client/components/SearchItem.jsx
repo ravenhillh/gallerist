@@ -8,7 +8,7 @@ function SearchItem({ image, idSearch }) {
       key={image.id}
     >
       <img
-        style={{ width: '250px', height: 'auto' }}
+        style={{ width: '300px', height: 'auto' }}
         src={image.baseimageurl}
         id={image.id}
         alt={image.alttext}

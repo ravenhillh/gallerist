@@ -2,6 +2,10 @@ import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
 import SearchItem from './SearchItem';
+import Stack from 'react-bootstrap/Stack';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 // '/huam/object/:imageid' --For detailed object about image
 // '/huam/image/:keyword' --For an array of images
@@ -62,7 +66,7 @@ function Search() {
   });
 
   useEffect(() => {
-    keywordSearch('dog');
+    keywordSearch('abstract');
   }, []);
 
   return (
@@ -72,17 +76,21 @@ function Search() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <button
+      <br />
+      <Button
         type="button"
+        size="sm"
+        variant="outline-dark"
         onClick={() => {
           // console.log('keyword: ', search);
           keywordSearch(search);
           setSearch('');
         }}
       >
-        Search by Keyword
-      </button>
-      <ul style={{ listStyleType: 'none' }}>
+        Search Artworks
+      </Button>
+      <br />
+      <Stack align="center" gap={3} style={{ listStyleType: 'none' }}>
         {
           images.map((image) => (
             <SearchItem
@@ -92,7 +100,7 @@ function Search() {
             />
           ))
         }
-      </ul>
+      </Stack>
     </div>
   );
 }
