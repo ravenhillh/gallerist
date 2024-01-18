@@ -20,6 +20,7 @@ function SearchItem({ image, idSearch }) {
         variant="outline"
         type="submit"
         onClick={() => idSearch(image.id)}
+        style={{ paddingBottom: '20px' }}
       >
         ❤️
       </Button>

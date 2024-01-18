@@ -7,15 +7,19 @@ import Login from './Login';
 
 function Home() {
   return (
-    <Container className="home" align="center">
-      <Card style={{ width: '18rem' }}>
+    <Container
+      className="home"
+      align="center"
+      style={{ paddingTop: '100px' }}
+    >
+      <Card style={{ width: '25rem' }}>
         <Card.Img
           variant="top"
           src="https://www.researchgate.net/profile/Dominik-Markowski-2/publication/301670799/figure/fig1/AS:668987461476355@1536510448133/Warhol-Andy-Colored-Mona-Lisa.jpg"
           alt="Warhol Mona Lisa"
         />
         <Card.Body>
-          <Card.Title>GLLRST</Card.Title>
+          <Card.Title style={{ fontSize: '300%' }}><strong>GLLRST</strong></Card.Title>
           <Login />
         </Card.Body>
       </Card>

@@ -90,7 +90,7 @@ function Search() {
         Search Artworks
       </Button>
       <br />
-      <Row align="center" gap={3} style={{ listStyleType: 'none' }}>
+      <Row align="center" gap={3} style={{ listStyleType: 'none', paddingTop: '20px' }}>
         {
           images.map((image) => (
             <SearchItem
