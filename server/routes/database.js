@@ -226,10 +226,6 @@ dbRouter.post('/db/art', (req, res) => {
    * All of these fields are available in art object returned from GET: 'huam/object/:id'
   title: String,
   artist: String,
-  artistDate: String,
-  altText: String,
-  description: String,
-  century: String,
   date: Number,
   culture: String,
   imageId: Number,
