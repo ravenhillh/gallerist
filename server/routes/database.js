@@ -59,6 +59,23 @@ dbRouter.get('/db/art/', (req, res) => {
     });
 });
 
+// GETs specific Artwork based on imageId sent
+dbRouter.get('/db/artwork/:imageId', (req, res) => {
+  const imageId = req.params;
+  Art.find({ imageId })
+    .then((artwork) => {
+      if (artwork) {
+        res.status(200).send(artwork);
+      } else {
+        res.sendStatus(404);
+      }
+    })
+    .catch((err) => {
+      console.error('Failed to find artwork by imageId: ', err);
+      res.sendStatus(500);
+    });
+});
+
 // GET all Art based on user sending request
 dbRouter.get('/db/userArt/', (req, res) => {
   const { googleId } = req.user.doc;
