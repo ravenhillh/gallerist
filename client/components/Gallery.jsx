@@ -27,16 +27,13 @@ function Gallery() {
   };
   // use an axios request to get a list of filtered images from art db based on friends or some key
   // pass in a word to filter by, possibly a friend's username
-  const getFilteredImages = useCallback(
-    (filter) => {
-      axios(`/db/art/${filter}`)
-        .then((art) => {
-          setImages(art.data);
-        })
-        .catch((err) => console.log('get filtered images failed', err));
-    },
-    [images],
-  );
+  const getFilteredImages = (filter) => {
+    axios(`/db/art/${filter}`)
+      .then((art) => {
+        setImages(art.data);
+      })
+      .catch((err) => console.log('get filtered images failed', err));
+  };
   // put the initial db request into useEffect to auto render images when you get to page
   useEffect(() => {
     get25RecentImages();
