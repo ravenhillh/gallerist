@@ -7,6 +7,7 @@ import Gallery from './Gallery';
 import NavBar from './NavBar';
 import Auction from './Auction';
 import Profile from './Profile';
+import Artwork from './Artwork';
 
 const App = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const App = createBrowserRouter([
       {
         path: 'auction',
         element: <Auction />,
+      },
+      {
+        path: 'art/:imageId',
+        element: <Artwork />,
       },
     ],
   },

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 function Profile() {
@@ -101,6 +102,7 @@ function Profile() {
               <a href={art.imageUrl}>{art.title}</a>
               {' - '}
               {art.artist}
+              <Link to={`/art/${art.imageId}`}>{art.imageId}</Link>
               <button type="button" value={art.imageId} onClick={deleteArt}>
                 X
               </button>
