@@ -12,37 +12,37 @@ import Home from './Home';
 const App = createBrowserRouter([
   {
     path: '/',
-    element: <NavBar />,
-    children: [
-      {
-        path: '/',
-        element: <Search />,
-      },
-      {
-        path: '/search',
-        element: <Search />,
-      },
-      {
-        path: 'login',
-        element: <Login />,
-      },
-      {
-        path: 'profile',
-        element: <Profile />,
-      },
-      {
-        path: 'gallery',
-        element: <Gallery />,
-      },
-      {
-        path: 'auction',
-        element: <Auction />,
-      },
-    ],
+    element: <Home />,
   },
   {
     path: '/home',
-    element: <Home />,
+    element: <NavBar />,
+    children: [
+      {
+        path: '/home',
+        element: <Search />,
+      },
+      {
+        path: '/home/search',
+        element: <Search />,
+      },
+      {
+        path: '/home/login',
+        element: <Login />,
+      },
+      {
+        path: '/home/profile',
+        element: <Profile />,
+      },
+      {
+        path: '/home/gallery',
+        element: <Gallery />,
+      },
+      {
+        path: '/home/auction',
+        element: <Auction />,
+      },
+    ],
   },
 ]);
 

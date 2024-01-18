@@ -53,7 +53,7 @@ authRouter.get('/login', (req, res) => {
 authRouter.get('/login/federated/google', passport.authenticate('google'));
 
 authRouter.get('/oauth2/redirect/google', passport.authenticate('google', {
-  successRedirect: '/',
+  successRedirect: '/home',
   failureRedirect: '/login',
 }));
 
