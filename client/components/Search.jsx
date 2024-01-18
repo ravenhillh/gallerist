@@ -2,10 +2,10 @@ import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
 import SearchItem from './SearchItem';
-import Stack from 'react-bootstrap/Stack';
+// import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 
 // '/huam/object/:imageid' --For detailed object about image
 // '/huam/image/:keyword' --For an array of images
@@ -70,7 +70,7 @@ function Search() {
   }, []);
 
   return (
-    <div>
+    <Container className="search">
       <input
         type="text"
         value={search}
@@ -90,7 +90,7 @@ function Search() {
         Search Artworks
       </Button>
       <br />
-      <Stack align="center" gap={3} style={{ listStyleType: 'none' }}>
+      <Row align="center" gap={3} style={{ listStyleType: 'none' }}>
         {
           images.map((image) => (
             <SearchItem
@@ -100,8 +100,8 @@ function Search() {
             />
           ))
         }
-      </Stack>
-    </div>
+      </Row>
+    </Container>
   );
 }
 

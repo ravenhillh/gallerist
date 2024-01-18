@@ -1,18 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
+import Image from 'react-bootstrap/Image';
+import Col from 'react-bootstrap/Col';
 
 function SearchItem({ image, idSearch }) {
   return (
-    <li
+    <Col
       key={image.id}
     >
-      <img
+      <Image
         style={{ width: '300px', height: 'auto' }}
         src={image.baseimageurl}
         id={image.id}
         alt={image.alttext}
       />
+      <br />
       <Button
         variant="outline"
         type="submit"
@@ -20,7 +23,7 @@ function SearchItem({ image, idSearch }) {
       >
         ❤️
       </Button>
-    </li>
+    </Col>
   );
 }
 
