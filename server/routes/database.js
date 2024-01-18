@@ -114,7 +114,7 @@ dbRouter.put('/db/art/:imageId', (req, res) => {
   Art.findOneAndUpdate(
     { imageId },
     { ...fieldsToUpdate, userGallery: { name, googleId } },
-    { new: true }
+    { new: true },
   )
     .then((updObj) => {
       if (updObj) {
@@ -155,7 +155,7 @@ dbRouter.put('/db/friends/', (req, res) => {
         User.findByIdAndUpdate(
           user._id,
           { $push: { friends: friend } },
-          { new: true }
+          { new: true },
         ).then((updObj) => {
           res.sendStatus(200);
         });
@@ -180,7 +180,7 @@ dbRouter.put('/db/unfriend/', (req, res) => {
       User.findOneAndUpdate(
         user._id,
         { friends: user.friends },
-        { new: true }
+        { new: true },
       ).then(() => {
         res.sendStatus(200);
       });
