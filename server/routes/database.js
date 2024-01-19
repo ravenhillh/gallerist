@@ -61,7 +61,7 @@ dbRouter.get('/db/art/', (req, res) => {
 
 // GETs specific Artwork based on imageId sent
 dbRouter.get('/db/artwork/:imageId', (req, res) => {
-  const imageId = req.params;
+  const { imageId } = req.params;
   Art.find({ imageId })
     .then((artwork) => {
       if (artwork) {
