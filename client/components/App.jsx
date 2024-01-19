@@ -44,7 +44,7 @@ const App = createBrowserRouter([
         element: <Auction />,
       },
       {
-        path: 'art/:imageId',
+        path: '/home/art/:imageId',
         element: <PhotoInfo />,
       },
     ],
