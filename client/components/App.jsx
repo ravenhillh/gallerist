@@ -9,6 +9,7 @@ import Auction from './Auction';
 import Profile from './Profile';
 import Home from './Home';
 import PhotoInfo from './PhotoInfo';
+import PalGallery from './PalGallery';
 
 const App = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const App = createBrowserRouter([
       {
         path: '/home/gallery',
         element: <Gallery />,
+      },
+      {
+        path: '/home/palGal/:user',
+        element: <PalGallery />,
       },
       {
         path: '/home/auction',
