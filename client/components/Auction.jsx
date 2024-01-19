@@ -22,6 +22,17 @@ function Auction() {
 
   useEffect(() => {
     getAuction();
+    const intervalId = setInterval(() => {
+      axios
+        .get('/db/auction/')
+        .then(({ data }) => {
+          if (auctionArray.length !== data.length) {
+            setAuctionArray(data);
+          }
+        })
+        .catch((err) => console.error('Could not GET auction items: ', err));
+    }, 2000);
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -35,7 +46,11 @@ function Auction() {
     <AuctionItem key={art.imageId} art={art} setSale={setSale} />
   ));
 
-  return <Container><Row>{auctionItems}</Row></Container>;
+  return (
+    <Container>
+      <Row>{auctionItems}</Row>
+    </Container>
+  );
 }
 
 export default Auction;
