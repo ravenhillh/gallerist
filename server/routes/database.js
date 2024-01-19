@@ -107,6 +107,23 @@ dbRouter.get('/db/art/:user', (req, res) => {
     });
 });
 
+// GET all art based on :culture filter, returns all art documents with a given culture
+dbRouter.get('/db/art/culture/:culture', (req, res) => {
+  const { culture } = req.params;
+  Art.find({ culture })
+    .then((cultureArt) => {
+      if (cultureArt.length) {
+        res.status(200).send(cultureArt);
+      } else {
+        res.sendStatus(404);
+      }
+    })
+    .catch((err) => {
+      console.error(`Failed to find ${culture} artwork: `, err);
+      res.sendStatus(500);
+    });
+});
+
 dbRouter.put('/db/art/:imageId', (req, res) => {
   const { imageId } = req.params;
   const { googleId, name } = req.user.doc;

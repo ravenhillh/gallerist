@@ -12,7 +12,9 @@ function GalleryListItem({ image }) {
   function addFriend(e) {
     // console.log(e.target.value)
     axios.put('/db/friends/', { friend: e.target.value })
-      .then(() => console.log('added friend!'))
+      .then(() => {
+        alert('You have a new friend!');
+      })
       .catch((err) => console.log(err, 'friend not added'));
   }
 
@@ -33,7 +35,7 @@ function GalleryListItem({ image }) {
               {image.title}
             </div>
             <div>
-              Owner:
+              Curated by:
               {' '}
               {image.userGallery.name}
             </div>
