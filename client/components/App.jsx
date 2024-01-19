@@ -8,6 +8,7 @@ import NavBar from './NavBar';
 import Auction from './Auction';
 import Profile from './Profile';
 import Home from './Home';
+import PhotoInfo from './PhotoInfo';
 
 const App = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const App = createBrowserRouter([
       {
         path: '/home/auction',
         element: <Auction />,
+      },
+      {
+        path: '/home/art/:imageId',
+        element: <PhotoInfo />,
       },
     ],
   },
