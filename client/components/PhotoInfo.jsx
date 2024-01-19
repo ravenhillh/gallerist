@@ -45,6 +45,9 @@ function PhotoInfo() {
           {' '}
           {currPhoto.culture}
         </li>
+        <li>
+          <a href={currPhoto.url}>Click for More Info</a>
+        </li>
       </ul>
     </div>
   );
