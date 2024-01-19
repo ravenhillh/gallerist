@@ -1,5 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 
 import GalleryListItem from './GalleryListItem';
 
@@ -41,13 +45,17 @@ function Gallery() {
   }, []);
   // added temporary hardcoded option for Artie McBuyer for dropdown list to test
   return (
-    <div>
-      <h2>Gallery</h2>
-      <div className="users" style={{ position: 'absolute', right: 0 }}>
-        <h3 className="section-header text-center">Users</h3>
-        <select className="users" onChange={(e) => getFilteredImages(e.target.value)}>
-          <option value="" key="54321">All</option>
-          {
+    <Container>
+      <Row>
+        <Col md={10}>
+          <h1><strong>Gallery</strong></h1>
+        </Col>
+        <Col md="auto">
+          <div className="users">
+            <h3 className="section-header text-center">Users</h3>
+            <Form.Select onChange={(e) => getFilteredImages(e.target.value)}>
+              <option value="" key="54321">All</option>
+              {
           usersArray.map((user, i) => (
             <option
               value={user.name}
@@ -57,17 +65,22 @@ function Gallery() {
             </option>
           ))
         }
-        </select>
-      </div>
-      <ul>
+            </Form.Select>
+          </div>
+        </Col>
+      </Row>
+      <Row>
         {images.map((image) => (
-          <GalleryListItem
-            image={image}
-            key={`${image.imageId}-${image.date}`}
-          />
+          <Col>
+            <GalleryListItem
+              image={image}
+              key={`${image.imageId}-${image.date}`}
+            />
+          </Col>
         ))}
-      </ul>
-    </div>
+      </Row>
+    </Container>
+
   );
 }
 
