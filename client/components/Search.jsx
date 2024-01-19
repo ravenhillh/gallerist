@@ -1,7 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
+
 import SearchItem from './SearchItem';
+// react bootstrap components
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 
 // '/huam/object/:imageid' --For detailed object about image
 // '/huam/image/:keyword' --For an array of images
@@ -34,6 +38,7 @@ function Search() {
       });
   }
 
+  // search by keyword
   function keywordSearch(term) {
     axios(`/huam/image/${term}`)
       .then((response) => {
@@ -62,27 +67,32 @@ function Search() {
   });
 
   useEffect(() => {
-    keywordSearch('dog');
+    keywordSearch('abstract');
   }, []);
 
   return (
-    <div>
+    <Container className="search">
       <input
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <button
+      <Button
         type="button"
+        size="sm"
+        variant="outline"
         onClick={() => {
           // console.log('keyword: ', search);
-          keywordSearch(search);
+          if (search.length > 0) {
+            keywordSearch(search);
+          }
           setSearch('');
         }}
       >
-        Search by Keyword
-      </button>
-      <ul style={{ listStyleType: 'none' }}>
+        🔍
+      </Button>
+      <br />
+      <Row align="center" gap={3} style={{ listStyleType: 'none', paddingTop: '20px' }}>
         {
           images.map((image) => (
             <SearchItem
@@ -92,8 +102,8 @@ function Search() {
             />
           ))
         }
-      </ul>
-    </div>
+      </Row>
+    </Container>
   );
 }
 
