@@ -6,9 +6,9 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 
 function AuctionItem({ art, setSale }) {
-  const [hover, setHover] = useState(false);
-  const onHover = () => setHover(true);
-  const onLeave = () => setHover(false);
+  // const [hover, setHover] = useState(false);
+  // const onHover = () => setHover(true);
+  // const onLeave = () => setHover(false);
 
   function bidClick(event) {
     axios
