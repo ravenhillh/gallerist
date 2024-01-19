@@ -60,7 +60,7 @@ authRouter.get('/oauth2/redirect/google', passport.authenticate('google', {
 authRouter.post('/logout', (req, res, next) => {
   req.logout((err) => {
     if (err) { return next(err); }
-    res.redirect('/login');
+    res.redirect('/');
   });
 });
 
