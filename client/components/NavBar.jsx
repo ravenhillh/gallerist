@@ -9,7 +9,7 @@ function NavBar() {
   const location = useLocation();
   return (
     <>
-      <Navbar expand="lg" className="sticky-top" bg="dark" data-bs-theme="dark">
+      <Navbar expand="lg" className="sticky-top" data-bs-theme="dark">
         <Container>
           <Navbar.Brand>
             <strong>GLLRST</strong>
