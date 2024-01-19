@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
-import Placeholder from 'react-bootstrap/Placeholder';
 import Login from './Login';
 
 function Home() {

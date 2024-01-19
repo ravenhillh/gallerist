@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
+
 import SearchItem from './SearchItem';
-// import Stack from 'react-bootstrap/Stack';
+// react bootstrap components
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -38,6 +38,7 @@ function Search() {
       });
   }
 
+  // search by keyword
   function keywordSearch(term) {
     axios(`/huam/image/${term}`)
       .then((response) => {
