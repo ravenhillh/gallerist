@@ -1,11 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 
-import SearchItem from './SearchItem';
 // react bootstrap components
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Modal from 'react-bootstrap/Modal';
+
+import SearchItem from './SearchItem';
 
 // '/huam/object/:imageid' --For detailed object about image
 // '/huam/image/:keyword' --For an array of images
@@ -14,6 +16,11 @@ function Search() {
   const [search, setSearch] = useState('');
   // state images array
   const [images, setImages] = useState([]);
+
+  // Modal state for 404 errors
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   // axios post request to user's gallery
   function postToGallery(artObj) {
@@ -56,7 +63,8 @@ function Search() {
         // console.log(data);
         if (data[0].images.length === 0) {
           // console.log(': (');
-          alert('Sorry this piece is no longer available');
+          // alert('Sorry this piece is no longer available');
+          handleShow();
         }
         return postToGallery(data[0]);
       })
@@ -76,6 +84,12 @@ function Search() {
       <input
         type="text"
         value={search}
+        onKeyDown={(e) => {
+          if (search.length > 0 && e.key === 'Enter') {
+            keywordSearch(search);
+            setSearch('');
+          }
+        }}
         onChange={(e) => setSearch(e.target.value)}
       />
       <Button
@@ -104,6 +118,15 @@ function Search() {
           ))
         }
       </Row>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Body>Sorry, this piece is no longer available.</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 }
