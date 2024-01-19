@@ -109,7 +109,7 @@ function Profile() {
                 </Button>
               </Col>
               <Col sm="10">
-                {pal}
+                <Link to={`/home/palGal/${pal}`}>{pal}</Link>
               </Col>
             </Row>
           </Container>
