@@ -1,15 +1,6 @@
 
 # GLLRST
 
-
-<!-- ## Heading -->
-  <!-- > Name the product in a way the reader (i.e. your target customers) will understand. -->
-
-  <!-- Recette -->
-
-<!-- ## Sub-Heading -->
-  <!-- > Describe who the market for the product is and what benefit they get. One sentence only underneath the title. -->
-
   A fun art sharing app for friends!
 
 ## Summary
@@ -29,9 +20,12 @@ in their part of the world to experience"
 
 - Nathan Cassiani, GLLRST Developer
 
+"I love spending time on GLLRST. I just get so frustrated when my friends beat me to a piece that I want!"
+- JQ Public
+
 ## How to Get Started
   <!-- > Describe how easy it is to get started. -->
 
   Log in via your google account, then check out the search page and start looking for new pieces to add to your collection. Check out the user gallery, and add friends who share your artistic interests.
 
-  Join GLLRST and start curating your own collection, now!
+  Join GLLRST and start curating your own collection, today!
