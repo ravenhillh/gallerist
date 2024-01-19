@@ -41,7 +41,7 @@ function GalleryListItem({ image }) {
               Add Friend
             </Button>
           </div>
-            <Link to={`/home/art/${image.imageId}`}>Click here for more details...</Link>
+          <Link to={`/home/art/${image.imageId}`}>Click here for more details...</Link>
         </Col>
       </Row>
 
