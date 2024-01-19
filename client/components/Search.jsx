@@ -16,6 +16,8 @@ function Search() {
   const [search, setSearch] = useState('');
   // state images array
   const [images, setImages] = useState([]);
+  // alert messages
+  const [message, setMessage] = useState('');
 
   // Modal state for 404 errors
   const [show, setShow] = useState(false);
@@ -41,7 +43,8 @@ function Search() {
       // redirect to gallery?
     })
       .catch((err) => {
-        alert('Sorry this piece is no longer available');
+        setMessage('This piece has already been acquired');
+        handleShow();
         console.error('Could not post to gallery ', err);
       });
   }
@@ -64,6 +67,7 @@ function Search() {
         if (data[0].images.length === 0) {
           // console.log(': (');
           // alert('Sorry this piece is no longer available');
+          setMessage('Sorry this piece is no longer available');
           handleShow();
         }
         return postToGallery(data[0]);
@@ -120,7 +124,7 @@ function Search() {
       </Row>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Body>Sorry, this piece is no longer available.</Modal.Body>
+        <Modal.Body>{ message }</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
