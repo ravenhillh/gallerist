@@ -34,6 +34,7 @@ function Search() {
       // redirect to gallery?
     })
       .catch((err) => {
+        alert('Sorry this piece is no longer available');
         console.error('Could not post to gallery ', err);
       });
   }
