@@ -76,18 +76,19 @@ function Search() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <br />
       <Button
         type="button"
         size="sm"
-        variant="outline-dark"
+        variant="outline"
         onClick={() => {
           // console.log('keyword: ', search);
-          keywordSearch(search);
+          if (search.length > 0) {
+            keywordSearch(search);
+          }
           setSearch('');
         }}
       >
-        Search Artworks
+        🔍
       </Button>
       <br />
       <Row align="center" gap={3} style={{ listStyleType: 'none', paddingTop: '20px' }}>
