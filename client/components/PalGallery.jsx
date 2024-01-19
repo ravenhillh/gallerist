@@ -2,6 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 import GalleryListItem from './GalleryListItem';
 
 function PalGallery() {
@@ -29,17 +33,23 @@ function PalGallery() {
   }, []);
 
   return (
-    <div>
-      <h2>{`${user}'s Gallery`}</h2>
-      <ul>
+    <Container>
+      <Row>
+        <Col md={10}>
+          <h1><strong>{`${user}'s Gallery`}</strong></h1>
+        </Col>
+      </Row>
+      <Row>
         {images.map((image) => (
-          <GalleryListItem
-            image={image}
-            key={`${image.imageId}-${image.date}`}
-          />
+          <Col>
+            <GalleryListItem
+              image={image}
+              key={`${image.imageId}-${image.date}`}
+            />
+          </Col>
         ))}
-      </ul>
-    </div>
+      </Row>
+    </Container>
   );
 }
 
