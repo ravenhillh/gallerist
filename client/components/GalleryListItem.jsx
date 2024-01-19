@@ -22,11 +22,13 @@ function GalleryListItem({ image }) {
         <Col>
           <div>
             <Image
+              className="gallery-image"
               style={{ width: '250px', height: 'auto' }}
               src={image.imageUrl}
               id={image.imageId}
               alt={image.title}
             />
+            <br />
             <div className="gallery-title">
               {' '}
               {image.title}
@@ -41,6 +43,7 @@ function GalleryListItem({ image }) {
             </Button>
           </div>
           <Link to={`/home/art/${image.imageId}`}>Click here for more details...</Link>
+          <br />
         </Col>
       </Row>
 
