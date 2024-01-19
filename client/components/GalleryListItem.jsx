@@ -27,8 +27,7 @@ function GalleryListItem({ image }) {
               id={image.imageId}
               alt={image.title}
             />
-            <div>
-              Title:
+            <div className="gallery-title">
               {' '}
               {image.title}
             </div>
