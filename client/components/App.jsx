@@ -7,35 +7,39 @@ import Gallery from './Gallery';
 import NavBar from './NavBar';
 import Auction from './Auction';
 import Profile from './Profile';
-import Artwork from './Artwork';
+import Home from './Home';
 
 const App = createBrowserRouter([
   {
     path: '/',
+    element: <Home />,
+  },
+  {
+    path: '/home',
     element: <NavBar />,
     children: [
       {
-        path: '/',
+        path: '/home',
         element: <Search />,
       },
       {
-        path: '/search',
+        path: '/home/search',
         element: <Search />,
       },
       {
-        path: 'login',
+        path: '/home/login',
         element: <Login />,
       },
       {
-        path: 'profile',
+        path: '/home/profile',
         element: <Profile />,
       },
       {
-        path: 'gallery',
+        path: '/home/gallery',
         element: <Gallery />,
       },
       {
-        path: 'auction',
+        path: '/home/auction',
         element: <Auction />,
       },
       {

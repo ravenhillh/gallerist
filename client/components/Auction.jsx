@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+
 import AuctionItem from './AuctionItem';
 
 function Auction() {
@@ -32,7 +35,7 @@ function Auction() {
     <AuctionItem key={art.imageId} art={art} setSale={setSale} />
   ));
 
-  return <span>{auctionItems}</span>;
+  return <Container><Row>{auctionItems}</Row></Container>;
 }
 
 export default Auction;

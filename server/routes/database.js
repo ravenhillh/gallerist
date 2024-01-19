@@ -59,6 +59,23 @@ dbRouter.get('/db/art/', (req, res) => {
     });
 });
 
+// GETs specific Artwork based on imageId sent
+dbRouter.get('/db/artwork/:imageId', (req, res) => {
+  const imageId = req.params;
+  Art.find({ imageId })
+    .then((artwork) => {
+      if (artwork) {
+        res.status(200).send(artwork);
+      } else {
+        res.sendStatus(404);
+      }
+    })
+    .catch((err) => {
+      console.error('Failed to find artwork by imageId: ', err);
+      res.sendStatus(500);
+    });
+});
+
 // GET all Art based on user sending request
 dbRouter.get('/db/userArt/', (req, res) => {
   const { googleId } = req.user.doc;
@@ -97,7 +114,7 @@ dbRouter.put('/db/art/:imageId', (req, res) => {
   Art.findOneAndUpdate(
     { imageId },
     { ...fieldsToUpdate, userGallery: { name, googleId } },
-    { new: true }
+    { new: true },
   )
     .then((updObj) => {
       if (updObj) {
@@ -138,7 +155,7 @@ dbRouter.put('/db/friends/', (req, res) => {
         User.findByIdAndUpdate(
           user._id,
           { $push: { friends: friend } },
-          { new: true }
+          { new: true },
         ).then((updObj) => {
           res.sendStatus(200);
         });
@@ -163,7 +180,7 @@ dbRouter.put('/db/unfriend/', (req, res) => {
       User.findOneAndUpdate(
         user._id,
         { friends: user.friends },
-        { new: true }
+        { new: true },
       ).then(() => {
         res.sendStatus(200);
       });
@@ -209,10 +226,6 @@ dbRouter.post('/db/art', (req, res) => {
    * All of these fields are available in art object returned from GET: 'huam/object/:id'
   title: String,
   artist: String,
-  artistDate: String,
-  altText: String,
-  description: String,
-  century: String,
   date: Number,
   culture: String,
   imageId: Number,
