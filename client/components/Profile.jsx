@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import Container from 'react-bootstrap/Container';
@@ -138,7 +139,7 @@ function Profile() {
                     <Row>
                       <Col sm="10">
                         <Row>
-                          <a href={art.imageUrl}><strong>{art.title}</strong></a>
+                          <Link to={`/home/art/${art.imageId}`}><strong>{art.title}</strong></Link>
                         </Row>
                         <Row>
                           {art.artist}
