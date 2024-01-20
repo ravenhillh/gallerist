@@ -11,7 +11,7 @@ mongoose.connect(db_uri)
   .catch((err) => console.log('Could not connect to database ', err));
 
 const UserSchema = new Schema({
-  username: String,
+  // username: String,
   googleId: String,
   name: String,
   // gallery: Array,
@@ -19,13 +19,6 @@ const UserSchema = new Schema({
   wallet: Number,
 });
 UserSchema.plugin(findOrCreate);
-
-// const CredentialsSchema = new Schema({
-//   user_id: Number,
-//   provider: String,
-//   subject: String,
-// });
-// CredentialsSchema.plugin(findOrCreate);
 
 const ArtSchema = new Schema({
   title: String,
@@ -44,7 +37,6 @@ const ArtSchema = new Schema({
 });
 
 const User = model('User', UserSchema);
-// const Credentials = model('Credentials', CredentialsSchema);
 const Art = model('Art', ArtSchema);
 
 module.exports = { User, Art };

@@ -12,19 +12,19 @@ passport.use(new GoogleStrategy({
   callbackURL: '/oauth2/redirect/google',
   scope: ['profile'],
 }, ((accessToken, refreshToken, profile, cb) => {
+  // Standardized profile that returns from Google, check it out with console log below
   // console.log(profile);
   User.findOrCreate({ googleId: profile.id, name: profile.displayName })
     .then((data) => {
-      // console.log('User data ', data);
       cb(null, data);
 
       //   User.create({
-      //     username: String,
+      //     googleId: profile.id (string),
       //     name: profile.displayName
-      //     gallery: Object,
       //     friends: Array,
       //     wallet: Number,
       //   })
+
     })
     .catch((err) => {
       console.error(' ', err);
@@ -36,9 +36,6 @@ passport.serializeUser((user, cb) => {
   cb(null, user);
 });
 passport.deserializeUser((user, cb) => {
-//   User.find({ googleId })
-//     .then((user) => cb(null, user))
-//     .catch((err) => cb(err));
   cb(null, user);
 });
 
@@ -46,7 +43,6 @@ passport.deserializeUser((user, cb) => {
 const authRouter = express.Router();
 
 authRouter.get('/login', (req, res) => {
-  console.log('rendering login');
   res.render('login');
 });
 

@@ -30,13 +30,14 @@ dbRouter.get('/db/users/', (req, res) => {
 });
 
 // USERS Routes: Update via a Put request
+// don't think this endpoint was ever used, was written to allow user to change username
+// was also used for a while to update gallery object on user, but that was deleted as it caused a double source of truth
 // '/db/user/:id'
 dbRouter.put('/db/user/:id', (req, res) => {
   const { id } = req.params;
-  const fieldsToUpdate = req.body; // gallery: {imageid: artObj}
+  const fieldsToUpdate = req.body; // gallery: {imageid: artObj} or username: 'so-and-so'
   User.findByIdAndUpdate(id, fieldsToUpdate)
     .then((updObj) => {
-      // console.log('Put data (updObj) by user ID: ', updObj);
       res.sendStatus(200);
       // res.sendStatus(404); //when we figure out what updObj looks like
     })
@@ -46,7 +47,7 @@ dbRouter.put('/db/user/:id', (req, res) => {
     });
 });
 
-// For possible pricing feature, to pay owner of art and increment wallet
+// For pricing feature, to pay owner of art and increment wallet
 dbRouter.put('/db/giveMoney/:name', (req, res) => {
   const { name } = req.params;
   const { price } = req.body;
@@ -60,7 +61,7 @@ dbRouter.put('/db/giveMoney/:name', (req, res) => {
     });
 });
 
-// For possible pricing feature, to deduct money from wallet upon purchase
+// For pricing feature, to deduct money from wallet upon purchase
 dbRouter.put('/db/deductWallet/', (req, res) => {
   const { _id } = req.user.doc;
   const { price } = req.body;
@@ -172,6 +173,7 @@ dbRouter.put('/db/art/:imageId', (req, res) => {
     });
 });
 
+// Delete request to remove Art object's from gallery
 dbRouter.delete('/db/art/:imageId', (req, res) => {
   const { imageId } = req.params;
   Art.findOneAndDelete({ imageId })
@@ -193,8 +195,8 @@ dbRouter.put('/db/friends/', (req, res) => {
   const { friend } = req.body; // req.body should be { friend: `friend's name` }
   const { googleId } = req.user.doc;
   User.findOne({ googleId })
-    // , { $push: { friends: friend } })
     .then((user) => {
+      // added conditional to prevent self-friending or duplication in friends array
       if (user.name !== friend && !user.friends.includes(friend)) {
         User.findByIdAndUpdate(
           user._id,
@@ -204,7 +206,7 @@ dbRouter.put('/db/friends/', (req, res) => {
           res.sendStatus(200);
         });
       } else {
-        res.sendStatus(204);
+        res.sendStatus(204);  // axios doesn't like 304 statuses
       }
     })
     .catch((err) => {
@@ -248,7 +250,6 @@ dbRouter.get('/db/auction/', (req, res) => {
 });
 
 // ART Routes: create() via a Post needs to come once we have the full art obj
-// .deleteOne() via a Delete request
 // POST '/db/art/ ==> req.body will contain fields corresponding to Art Schema
 dbRouter.post('/db/art', (req, res) => {
   // destructure relevant user info from request
