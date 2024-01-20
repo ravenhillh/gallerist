@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import GalleryListItem from './GalleryListItem';
+import PalGalleryItem from './PalGalleryItem';
 
 function PalGallery() {
   const { user } = useParams();
@@ -24,8 +24,22 @@ function PalGallery() {
         })
         .catch((err) => console.log('get filtered images failed', err));
     },
-    [images],
+    [images]
   );
+
+  // send a request to filter by culture
+  const getImagesByCulture = (filter) => {
+    if (!filter) {
+      get25RecentImages();
+    } else {
+      axios
+        .post(`/db/culture/${filter}`, { name: currUser })
+        .then((art) => {
+          setImages(art.data);
+        })
+        .catch((err) => console.log('get images by culture failed', err));
+    }
+  };
 
   // put the initial db request into useEffect to auto render images when you get to page
   useEffect(() => {
@@ -35,16 +49,17 @@ function PalGallery() {
   return (
     <Container>
       <Row>
-        <Col md={10}>
-          <h1><strong>{`${user}'s Gallery`}</strong></h1>
+        <Col>
+          <h1>
+            <strong>{`${user}'s Gallery`}</strong>
+          </h1>
         </Col>
       </Row>
       <Row>
         {images.map((image) => (
-          <Col>
-            <GalleryListItem
+          <Col key={`${image.imageId}-${image.date}`}>
+            <PalGalleryItem
               image={image}
-              key={`${image.imageId}-${image.date}`}
             />
           </Col>
         ))}

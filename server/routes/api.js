@@ -24,7 +24,7 @@ apiRouter.get('/huam/image/:keyword', (req, res) => {
       res.sendStatus(500);
     });
 });
-// temporary comments to test out new repo
+
 // Should be used to get more detailed information about an image in the above array
 // Search by 'imageid' property that will be present on above image object
 apiRouter.get('/huam/object/:id', (req, res) => {

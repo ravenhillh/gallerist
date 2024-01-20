@@ -30,13 +30,14 @@ dbRouter.get('/db/users/', (req, res) => {
 });
 
 // USERS Routes: Update via a Put request
+// don't think this endpoint was ever used, was written to allow user to change username
+// was also used for a while to update gallery object on user, but that was deleted as it caused a double source of truth
 // '/db/user/:id'
 dbRouter.put('/db/user/:id', (req, res) => {
   const { id } = req.params;
-  const fieldsToUpdate = req.body; // gallery: {imageid: artObj}
+  const fieldsToUpdate = req.body; // gallery: {imageid: artObj} or username: 'so-and-so'
   User.findByIdAndUpdate(id, fieldsToUpdate)
     .then((updObj) => {
-      // console.log('Put data (updObj) by user ID: ', updObj);
       res.sendStatus(200);
       // res.sendStatus(404); //when we figure out what updObj looks like
     })
@@ -46,7 +47,7 @@ dbRouter.put('/db/user/:id', (req, res) => {
     });
 });
 
-// For possible pricing feature, to pay owner of art and increment wallet
+// For pricing feature, to pay owner of art and increment wallet
 dbRouter.put('/db/giveMoney/:name', (req, res) => {
   const { name } = req.params;
   const { price } = req.body;
@@ -60,7 +61,7 @@ dbRouter.put('/db/giveMoney/:name', (req, res) => {
     });
 });
 
-// For possible pricing feature, to deduct money from wallet upon purchase
+// For pricing feature, to deduct money from wallet upon purchase
 dbRouter.put('/db/deductWallet/', (req, res) => {
   const { _id } = req.user.doc;
   const { price } = req.body;
@@ -162,6 +163,9 @@ dbRouter.post('/db/culture/:culture', (req, res) => {
     });
 });
 
+// Updates art object.  Used in Profile and Auction for listing/unlisting/purchasing of art.
+// Takes parameter of imageId as the filter object, then fields in req.body are part of update object,
+// Lastly, takes googleId and name from req.user.doc to update userGallery field based on which user sent request
 dbRouter.put('/db/art/:imageId', (req, res) => {
   const { imageId } = req.params;
   const { googleId, name } = req.user.doc;
@@ -183,6 +187,7 @@ dbRouter.put('/db/art/:imageId', (req, res) => {
     });
 });
 
+// Delete request to remove Art object's from gallery
 dbRouter.delete('/db/art/:imageId', (req, res) => {
   const { imageId } = req.params;
   Art.findOneAndDelete({ imageId })
@@ -204,8 +209,8 @@ dbRouter.put('/db/friends/', (req, res) => {
   const { friend } = req.body; // req.body should be { friend: `friend's name` }
   const { googleId } = req.user.doc;
   User.findOne({ googleId })
-    // , { $push: { friends: friend } })
     .then((user) => {
+      // added conditional to prevent self-friending or duplication in friends array
       if (user.name !== friend && !user.friends.includes(friend)) {
         User.findByIdAndUpdate(
           user._id,
@@ -215,7 +220,7 @@ dbRouter.put('/db/friends/', (req, res) => {
           res.sendStatus(200);
         });
       } else {
-        res.sendStatus(204);
+        res.sendStatus(204);  // axios doesn't like 304 statuses
       }
     })
     .catch((err) => {
@@ -230,8 +235,11 @@ dbRouter.put('/db/unfriend/', (req, res) => {
   const { googleId } = req.user.doc;
   User.findOne({ googleId })
     .then((user) => {
+      // Might be a mongoose trick to do this, but I just find the index of the string of the friend's name
       const idx = user.friends.indexOf(friend);
+      // ...and splice it out (splice is mutative/destructive)
       user.friends.splice(idx, 1);
+      // Then update the user document that was just found with the new array
       User.findOneAndUpdate(
         user._id,
         { friends: user.friends },
@@ -259,7 +267,6 @@ dbRouter.get('/db/auction/', (req, res) => {
 });
 
 // ART Routes: create() via a Post needs to come once we have the full art obj
-// .deleteOne() via a Delete request
 // POST '/db/art/ ==> req.body will contain fields corresponding to Art Schema
 dbRouter.post('/db/art', (req, res) => {
   // destructure relevant user info from request
