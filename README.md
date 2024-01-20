@@ -10,7 +10,10 @@ Once signed in with a Google account, our home page has a simple navbar to allow
 
 ### **Search**
 
-(Nathan feature explanation)
+The search page allows users to search art by a keyword and returns 10 randomized results related to that keyword.
+If the users likes an artwork, they can click on the heart emoji below to attempt to add it to their personal
+gallery. Some artworks remain out of bounds for GLLRST users (such is the harsh reality of the art market!), and
+artworks that have been previously acquired by other users will also not be available. However, successful acquisition of a piece will only cost $5 (deducted from the user's wallet), and will be added to the user's gallery.
 
 ### **Gallery**
 
