@@ -17,7 +17,7 @@ function Home() {
       >
         <Card.Img
           variant="top"
-          src="https://www.researchgate.net/profile/Dominik-Markowski-2/publication/301670799/figure/fig1/AS:668987461476355@1536510448133/Warhol-Andy-Colored-Mona-Lisa.jpg"
+          src="https://i.imgur.com/GUmlJan.jpg"
           alt="Warhol Mona Lisa"
         />
         <Card.Body>
