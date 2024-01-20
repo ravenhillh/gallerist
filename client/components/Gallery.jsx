@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,13 +9,14 @@ import GalleryListItem from './GalleryListItem';
 
 function Gallery() {
   // use useState to define an images array and method to store and update gallery images
-  // use useState to define a user array and set the values on the array
-  // use useState to define a user array of cultures to sort by
   const [images, setImages] = useState([]);
+  // use useState to define a user array and set the values on the array
   const [usersArray, setUsersArray] = useState([]);
+  // use useState to define an array of cultures to sort by
   const [cultures, setCulturesArray] = useState([]);
-  const [currUser, setCurrUser] = useState('');
   // add in a curr user to state for accessing user in culture/user sort
+  const [currUser, setCurrUser] = useState('');
+
   // send a request to get all users in the db
   const getAllUsers = () => {
     axios('/db/users/')
@@ -40,27 +41,37 @@ function Gallery() {
       })
       .catch((err) => console.log(err));
   };
+
   // use an axios request to get a list of filtered images from art db based on user
   const getFilteredImages = (filter) => {
     setCurrUser(filter);
     axios(`/db/art/${filter}`)
       .then((art) => {
         setImages(art.data);
+        const newCults = art.data.reduce((acc, curr) => {
+          if (!acc.includes(curr.culture)) {
+            acc.push(curr.culture);
+          }
+          return acc;
+        }, []);
+        setCulturesArray(newCults);
       })
       .catch((err) => console.log('get filtered images failed', err));
   };
   // send a request to filter by culture
   const getImagesByCulture = (filter) => {
     if (!filter) {
+      getAllUsers();
       get25RecentImages();
     } else {
-      axios(`/db/culture/${filter}`)
+      axios.post(`/db/culture/${filter}`, { name: currUser })
         .then((art) => {
           setImages(art.data);
         })
         .catch((err) => console.log('get images by culture failed', err));
     }
   };
+  // create a userList to populate user dropdown
   const userList = usersArray.map((user, i) => (
     <option
       value={user.name}
@@ -93,7 +104,7 @@ function Gallery() {
         <Col md="auto">
           <div className="users">
             <h3 className="section-header text-center">Users</h3>
-            <Form.Select onChange={(e) => getFilteredImages(e.target.value)}>
+            <Form.Select defaultValue="" onChange={(e) => getFilteredImages(e.target.value)}>
               <option value="" key="54321">All</option>
               {userList}
             </Form.Select>
@@ -102,7 +113,7 @@ function Gallery() {
         <Col md={2}>
           <div className="culture">
             <h3 className="section-header text-center">Cultures</h3>
-            <Form.Select onChange={(e) => getImagesByCulture(e.target.value)}>
+            <Form.Select defaultValue="" onChange={(e) => getImagesByCulture(e.target.value)}>
               <option value="" key="296573">All</option>
               {culturesList}
             </Form.Select>
