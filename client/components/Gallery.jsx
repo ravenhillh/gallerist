@@ -97,12 +97,12 @@ function Gallery() {
   return (
     <Container>
       <Row>
-        <Col md={6}>
+        <Col md={8}>
           <h1><strong>Gallery</strong></h1>
         </Col>
-        <Col md="auto">
-          <div className="users">
-            <h3 className="section-header text-center">Users</h3>
+        <Col md={2}>
+          <div className="dropdown">
+            <h3 className="section-header text-center">Curators</h3>
             <Form.Select defaultValue="" onChange={(e) => getFilteredImages(e.target.value)}>
               <option value="" key="54321">All</option>
               {userList}
@@ -110,7 +110,7 @@ function Gallery() {
           </div>
         </Col>
         <Col md={2}>
-          <div className="culture">
+          <div className="dropdown">
             <h3 className="section-header text-center">Cultures</h3>
             <Form.Select defaultValue="" onChange={(e) => getImagesByCulture(e.target.value)}>
               <option value="" key="296573">All</option>
@@ -121,10 +121,9 @@ function Gallery() {
       </Row>
       <Row>
         {images.map((image, i) => (
-          <Col>
+          <Col key={`${image.imageId}-${i}`}>
             <GalleryListItem
               image={image}
-              key={`${image.imageId}-${i}`}
             />
           </Col>
         ))}
