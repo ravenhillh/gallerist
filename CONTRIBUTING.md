@@ -24,8 +24,9 @@ Once you have an API key, this repo relies on a .env file that should have the f
 - EXPRESS_SECRET : a random string of your liking, also used in the authentication set-up
 
 Lastly, the following variables are optional, but are explained for full transparency:
+
 - NODE_ENV : set to 'development', although our webpack config will default to 'production' if you don't include this
--GOOGLEID : necessary for the 'seed' script to initialize the database with the fakeData found in /server/db/fakeData.js.  You can find your google id and name in the mongosh shell with the command 'db.users.find({})'.
+-GOOGLEID : necessary for the 'seed' script to initialize the database with the fakeData found in /server/db/fakeData.js.  You can find your google id and name in the mongosh shell with the command `db.users.find({})`.
 -GOOGLENAME : (see above)
 
 ## The Specifics of Getting Started
