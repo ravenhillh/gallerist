@@ -14,7 +14,9 @@ Once signed in with a Google account, our home page has a simple navbar to allow
 
 ### **Gallery**
 
-(Raven feature explanation)
+The gallery page displays all the art in the gallery. You can filter the art by who owns it, and by the culture of the art.
+You can also use this page to add friends, based on the art pieces you're looking at. Each piece of art also links to another
+page where you can find a more in depth description of the piece.
 
 ### **Individual Artwork Info**
 
