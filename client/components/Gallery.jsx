@@ -14,7 +14,7 @@ function Gallery() {
   const [usersArray, setUsersArray] = useState([]);
   // use useState to define an array of cultures to sort by
   const [cultures, setCulturesArray] = useState([]);
-  // add in a curr user to state for accessing user in culture/user sort
+  // add in a curr user to state for accessing user in culture/user filter
   const [currUser, setCurrUser] = useState('');
 
   // send a request to get all users in the db
@@ -61,7 +61,6 @@ function Gallery() {
   // send a request to filter by culture
   const getImagesByCulture = (filter) => {
     if (!filter) {
-      getAllUsers();
       get25RecentImages();
     } else {
       axios.post(`/db/culture/${filter}`, { name: currUser })
