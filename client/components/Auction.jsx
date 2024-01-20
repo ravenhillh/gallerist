@@ -59,7 +59,10 @@ function Auction() {
   return (
     <Container>
       <Row>
-        <h3>{`Your Wallet: $${wallet}`}</h3>
+        <h3>Wallet:</h3>
+        <h3>
+          {wallet ? `$${wallet}` : '$0.00'}
+        </h3>
       </Row>
       <Row>{auctionItems}</Row>
     </Container>
