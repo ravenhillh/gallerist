@@ -136,12 +136,23 @@ dbRouter.get('/db/art/:user', (req, res) => {
 });
 
 // GET all art based on :culture filter, returns all art documents with a given culture
-dbRouter.get('/db/culture/:culture', (req, res) => {
+dbRouter.post('/db/culture/:culture', (req, res) => {
   const { culture } = req.params;
+  const { name } = req.body;
   Art.find({ culture })
     .then((cultureArt) => {
       if (cultureArt.length) {
-        res.status(200).send(cultureArt);
+        // check if name is defined, if it is then query
+        if (!name) {
+          res.status(200).send(cultureArt);
+        } else {
+          Art.find({ culture }).where({ 'userGallery.name': name })
+            .then((bothArt) => {
+              if (bothArt.length) {
+                res.status(200).send(bothArt);
+              }
+            }).catch(() => res.sendStatus(404));
+        }
       } else {
         res.sendStatus(404);
       }
