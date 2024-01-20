@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
+import Spinner from 'react-bootstrap/Spinner';
 
 // react bootstrap components
 import Button from 'react-bootstrap/Button';
@@ -18,6 +19,8 @@ function Search() {
   const [images, setImages] = useState([]);
   // alert messages
   const [message, setMessage] = useState('');
+  // boolean state value for spinner
+  const [isLoading, setIsLoading] = useState(false);
 
   // Modal state for 404 errors
   const [show, setShow] = useState(false);
@@ -39,7 +42,9 @@ function Search() {
         price: 0,
       },
     }).then(() => {
-      console.log('succesfully posted to db');
+      // console.log('succesfully posted to db');
+      setMessage('Piece acquired for $5!');
+      handleShow();
       // deduct $5 from wallet upon adding to gallery
       axios
         .put('/db/deductWallet/', {
@@ -71,8 +76,6 @@ function Search() {
       .then(({ data }) => {
         // console.log(data);
         if (data[0].images.length === 0) {
-          // console.log(': (');
-          // alert('Sorry this piece is no longer available');
           setMessage('Sorry this piece is no longer available');
           handleShow();
         }
@@ -95,6 +98,7 @@ function Search() {
       <input
         type="text"
         value={search}
+        placeholder="Search for Art"
         onKeyDown={(e) => {
           if (search.length > 0 && e.key === 'Enter') {
             keywordSearch(search);
@@ -111,11 +115,19 @@ function Search() {
           // console.log('keyword: ', search);
           if (search.length > 0) {
             keywordSearch(search);
+            setIsLoading(true);
           }
           setSearch('');
+          setInterval(setIsLoading, 500, false);
         }}
       >
-        🔍
+        {
+          isLoading ? (
+            <Spinner animation="border" size="sm" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          ) : '🔍'
+        }
       </Button>
       <br />
       <Row align="center" gap={3} style={{ listStyleType: 'none', paddingTop: '20px' }}>

@@ -21,7 +21,7 @@ function GalleryListItem({ image }) {
   return (
     <Container fluid>
       <Row>
-        <Col>
+        <Col key={image.imageId}>
           <div>
             <Image
               className="gallery-image"
