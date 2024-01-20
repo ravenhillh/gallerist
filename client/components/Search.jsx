@@ -40,7 +40,6 @@ function Search() {
       },
     }).then(() => {
       console.log('succesfully posted to db');
-      // redirect to gallery?
     })
       .catch((err) => {
         setMessage('This piece has already been acquired');
