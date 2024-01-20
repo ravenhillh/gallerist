@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
@@ -6,14 +6,20 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 function GalleryListItem({ image }) {
+  // set up modal for friend request
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   // add a friend to users friend array
   function addFriend(e) {
     // console.log(e.target.value)
     axios.put('/db/friends/', { friend: e.target.value })
       .then(() => {
-        alert('You have a new friend!');
+        // use modal after friend is added
+        handleShow();
       })
       .catch((err) => console.log(err, 'friend not added'));
   }
@@ -21,7 +27,7 @@ function GalleryListItem({ image }) {
   return (
     <Container fluid>
       <Row>
-        <Col key={image.imageId}>
+        <Col className="gallery-item" key={image.imageId}>
           <div>
             <Image
               className="gallery-image"
@@ -40,7 +46,7 @@ function GalleryListItem({ image }) {
               {' '}
               {image.userGallery.name}
             </div>
-            <Button variant="secondary" value={image.userGallery.name} onClick={addFriend}>
+            <Button variant="primary" value={image.userGallery.name} onClick={addFriend}>
               Add Friend
             </Button>
           </div>
@@ -48,7 +54,14 @@ function GalleryListItem({ image }) {
           <br />
         </Col>
       </Row>
-
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Body>You've got a new friend!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
 
   );
