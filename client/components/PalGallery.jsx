@@ -57,10 +57,9 @@ function PalGallery() {
       </Row>
       <Row>
         {images.map((image) => (
-          <Col>
+          <Col key={`${image.imageId}-${image.date}`}>
             <PalGalleryItem
               image={image}
-              key={`${image.imageId}-${image.date}`}
             />
           </Col>
         ))}
