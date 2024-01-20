@@ -321,6 +321,7 @@ function Profile() {
       <Modal
         show={show}
         onHide={closePriceModal}
+        autoFocus={false}
       >
         <Modal.Header>
           <Modal.Title>Set Price</Modal.Title>
@@ -328,7 +329,7 @@ function Profile() {
         <Modal.Body>
           <Form.Group>
             <Form.Label>Price: </Form.Label>
-            <Form.Control type="number" onChange={handleChange} value={price} placeholder="0" />
+            <Form.Control autoFocus={true} type="number" onChange={handleChange} placeholder="0" />
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
