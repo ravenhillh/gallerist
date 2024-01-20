@@ -11,6 +11,7 @@ function SearchItem({ image, idSearch }) {
     >
       <a href={image.baseimageurl}>
         <Image
+          className="search-image"
           style={{ width: '300px', height: 'auto' }}
           src={image.baseimageurl}
           id={image.id}
