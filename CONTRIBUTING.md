@@ -14,7 +14,7 @@ Also, check out the [STYLE-GUIDE](https://github.com/Par-For-Loops/gallerist/blo
 
 We interact with the Harvard University Art Museum (HUAM) API to retrieve art.  Check out the [documentation](https://github.com/harvardartmuseums/api-docs) for this API at github and sign up for your own API key with Harvard at [this link to a Google form](https://docs.google.com/forms/d/e/1FAIpQLSfkmEBqH76HLMMiCC-GPPnhcvHC9aJS86E32dOd0Z8MpY2rvQ/viewform) in the "Access to the API section". When we initially made this project, this key was free, and the email response from Harvard was instantaneous and automatic.
 
-## **Necessary Environmental Variables**
+## **Environmental Variables**
 
 Once you have an API key, this repo relies on a .env file that should have the following environmental variables defined:
 

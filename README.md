@@ -50,7 +50,7 @@ When we initially made this project in January 2024, this key was free, and the 
 
 ### **Environmental Variables**
 
-### **Required Variables for App to Function**
+#### **Required Variables for App to Function**
 
 Once you have an API key, this repo relies on a .env file (already listed in the .gitignore) that should have the following environmental variables defined:
 
@@ -59,7 +59,7 @@ Once you have an API key, this repo relies on a .env file (already listed in the
 - **GOOGLE_CLIENT_SECRET** : (see above)
 - **EXPRESS_SECRET** : a random string of your liking, also used in the authentication set-up
 
-### **Optional Variable**s
+#### **Optional Variable**s
 
 The following variables are optional for setting the Webpack config to Development Mode and seeding the database with a fake dataset, which should no longer be necessary if you got an API Key, but are explained for full transparency:
 
