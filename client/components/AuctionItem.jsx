@@ -5,11 +5,11 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 
-function AuctionItem({ art, setSale }) {
-  // const [hover, setHover] = useState(false);
-  // const onHover = () => setHover(true);
-  // const onLeave = () => setHover(false);
+function AuctionItem({ art, setSale }) { // destructure props of art document and setSale method from parent
 
+  // bidClick puts an update on art object, sets isForSale back to false
+  // database router gets user's information from req.user to update userGallery based on who sends request
+  // this is how ownership is reassigned. (same endpoint used in profile for selling the artwork)
   function bidClick(event) {
     axios
       .put(`/db/art/${event.target.value}`, {
@@ -20,12 +20,15 @@ function AuctionItem({ art, setSale }) {
       .catch((err) => console.error('Could not Put update on artwork: ', err));
   }
 
+  // Function for exchanging funds between wallet.  Just wrote two endpoints to increment one user's wallet field
+  // And decrement (or increment negatively) the buyer's wallet
   function payOwner() {
     axios
       .put(`/db/giveMoney/${art.userGallery.name}`, {
         price: art.price,
       })
       .then(() => {
+        // Similar to above function, router simply pulls user info out of request
         axios
           .put('/db/deductWallet/', {
             price: art.price,
@@ -62,18 +65,5 @@ function AuctionItem({ art, setSale }) {
     </Col>
   );
 }
-// {/* <div>
-// {hover ? <div>{art.title}</div> : <div> </div>}
-// <img
-//   style={{ width: '250px', height: 'auto' }}
-//   src={art.imageUrl}
-//   onMouseEnter={onHover}
-//   onMouseLeave={onLeave}
-//   alt={art.title}
-// />
-// <button onClick={bidClick} value={art.imageId} type="button">
-//   Buy
-// </button>
-// </div> */}
 
 export default AuctionItem;

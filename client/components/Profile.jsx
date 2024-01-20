@@ -15,11 +15,10 @@ function Profile() {
   // Initialize three main parts of profile page
   const [name, setName] = useState('');
   const [friends, setFriends] = useState([]);
-  const [wallet, setWallet] = useState(0); // adding for possible price feature
+  const [wallet, setWallet] = useState(0); // added for price feature
 
+  // used to set array of all art documents associated with user
   const [gallery, setGallery] = useState([]);
-
-  // const [reload, setReload] = useState(false);
 
   // Price setting modal
   const [show, setShow] = useState(false);
@@ -60,15 +59,7 @@ function Profile() {
     getUserGallery();
   }, []);
 
-  // Re-render component when User document changes, i.e. friend deleted
-  // useEffect(() => {
-  //   if (reload) {
-  //     getProfile();
-  //     setReload(true);
-  //   }
-  // }, [reload]);
-
-  // State for possible price setting feature
+  // State for price setting feature
   const [price, setPrice] = useState(0);
   const [imageId, setImageId] = useState(0);
 
@@ -82,10 +73,12 @@ function Profile() {
       .catch((err) => console.error('Could not Put update on artwork: ', err));
   }
 
+  // Simple handle change for inputting sale price in price-setting modal
   function handleChange(event) {
     setPrice(event.target.value);
   }
 
+  // Left for posterity's sake, this was the original way to set art for sale before price was implemented
   // Way to putSale with only button, no pricing
   // Updates art object by changing isForSale field to true
   // function putSale(event) {
@@ -98,6 +91,7 @@ function Profile() {
   //     .catch((err) => console.error('Could not Put update on artwork: ', err));
   // }
 
+  // Added complementary feature to allow user to unlist an art item instead of having to go to Auction to buy it back
   function unlistSale(event) {
     axios
       .put(`/db/art/${event.target.value}`, {
@@ -118,19 +112,40 @@ function Profile() {
 
   // Deletes art object, then updates gallery State by invoking getUserGallery
   function deleteArt(event) {
-    const brokerArray = ['Artie McBuyer', 'Pinta Purchassini', 'Monet Baggs', 'Andrew Draw', 'Picasso Paintman', 'Guy Frames', 'Vanessa Van Canvas'];
+    // Silly feature to randomly generate an art broker/dealer to purchase your deleted
+    const brokerArray = [
+      'Artie McBuyer',
+      'Pinta Purchassini',
+      'Monet Baggs',
+      'Andrew Draw',
+      'Picasso Paintman',
+      'Guy Frames',
+      'Vanessa Van Canvas',
+    ];
+    // Generates a random purchase price of 0 to 49
     const randomPrice = Math.floor(Math.random() * 50);
-    setMessage(`${brokerArray[Math.floor(Math.random() * brokerArray.length)]} bought your artwork for $${randomPrice}.`);
+    // Randomly selects a broker and pays you a random amount for deleting your art. I know, this makes no sense.
+    setMessage(
+      `${
+        brokerArray[Math.floor(Math.random() * brokerArray.length)]
+      } bought your artwork for $${randomPrice}.`
+    );
+    // Modal with the surprise news that your worthless art was actually worth something
     showDelModal();
+    // Delete request to remove art document from database
     axios
       .delete(`/db/art/${event.target.value}`)
       .then(() => getUserGallery())
       .catch((err) => console.error('Could not Delete art: ', err));
-    axios.put(`/db/giveMoney/${name}`, {
-      price: randomPrice,
-    })
+    // Put request to add funds to user's wallet
+    axios
+      .put(`/db/giveMoney/${name}`, {
+        price: randomPrice,
+      })
       .then(() => getProfile())
-      .catch((err) => console.error('Could not get paid by Artie McBuyer: ', err));
+      .catch((err) =>
+        console.error('Could not get paid by Artie McBuyer: ', err)
+      );
   }
 
   // Iterate over friends array, could be improved by linking to friend's gallery perhaps
@@ -141,18 +156,18 @@ function Profile() {
         <ListGroup.Item key={`${pal}-${i}`}>
           <Container>
             <Row>
-              <Col sm="2">
+              <Col sm='2'>
                 <Button
-                  variant="outline"
-                  type="button"
-                  size="sm"
+                  variant='outline'
+                  type='button'
+                  size='sm'
                   value={pal}
                   onClick={unFriend}
                 >
                   ❌
                 </Button>
               </Col>
-              <Col sm="10">
+              <Col sm='10'>
                 <Link to={`/home/palGal/${pal}`}>{pal}</Link>
               </Col>
             </Row>
@@ -170,8 +185,8 @@ function Profile() {
   // Each Item of Accordion is a ListGroup, each ListGroup.Item is art title and artist
   // with a couple of buttons to sell at auction, or delete, links to image url
   const artDiv = gallery ? (
-    <Accordion defaultActiveKey="0">
-      <Accordion.Item eventKey="0">
+    <Accordion defaultActiveKey='0'>
+      <Accordion.Item eventKey='0'>
         <Accordion.Header>Artworks:</Accordion.Header>
         <Accordion.Body>
           <ListGroup>
@@ -181,18 +196,18 @@ function Profile() {
                 <ListGroup.Item key={`${art}-${i}`}>
                   <Container>
                     <Row>
-                      <Col sm="10">
+                      <Col sm='10'>
                         <Row>
-                          <Link to={`/home/art/${art.imageId}`}><strong>{art.title}</strong></Link>
+                          <Link to={`/home/art/${art.imageId}`}>
+                            <strong>{art.title}</strong>
+                          </Link>
                         </Row>
-                        <Row>
-                          {art.artist}
-                        </Row>
+                        <Row>{art.artist}</Row>
                       </Col>
-                      <Col sm="1">
+                      <Col sm='1'>
                         <Button
-                          variant="outline-success"
-                          type="button"
+                          variant='outline-success'
+                          type='button'
                           value={art.imageId}
                           // onClick={putSale}
                           onClick={(e) => {
@@ -203,10 +218,10 @@ function Profile() {
                           Sell
                         </Button>
                       </Col>
-                      <Col sm="1">
+                      <Col sm='1'>
                         <Button
-                          variant="outline"
-                          type="button"
+                          variant='outline'
+                          type='button'
                           value={art.imageId}
                           onClick={deleteArt}
                         >
@@ -220,7 +235,7 @@ function Profile() {
           </ListGroup>
         </Accordion.Body>
       </Accordion.Item>
-      <Accordion.Item eventKey="1">
+      <Accordion.Item eventKey='1'>
         <Accordion.Header>Art For Sale:</Accordion.Header>
         <Accordion.Body>
           <ListGroup>
@@ -230,28 +245,28 @@ function Profile() {
                 <ListGroup.Item key={`${art}-${i}`}>
                   <Container>
                     <Row>
-                      <Col sm="10">
+                      <Col sm='10'>
                         <Row>
-                          <Link to={`/home/art/${art.imageId}`}><strong>{art.title}</strong></Link>
+                          <Link to={`/home/art/${art.imageId}`}>
+                            <strong>{art.title}</strong>
+                          </Link>
                         </Row>
-                        <Row>
-                          {art.artist}
-                        </Row>
+                        <Row>{art.artist}</Row>
                       </Col>
-                      <Col sm="1">
+                      <Col sm='1'>
                         <Button
-                          variant="outline-warning"
-                          type="button"
+                          variant='outline-warning'
+                          type='button'
                           value={art.imageId}
                           onClick={unlistSale}
                         >
                           Unlist
                         </Button>
                       </Col>
-                      <Col sm="1">
+                      <Col sm='1'>
                         <Button
-                          variant="outline"
-                          type="button"
+                          variant='outline'
+                          type='button'
                           value={art.imageId}
                           onClick={deleteArt}
                         >
@@ -275,17 +290,19 @@ function Profile() {
   return (
     <Container>
       <Row>
-        <Col sm="4">
-          <h2>
-            <strong>{name}</strong>
-          </h2>
+        <Col sm='4'>
+          <Link to={`/home/palGal/${name}`}>
+            <h2>
+              <strong>{name}</strong>
+            </h2>
+          </Link>
           <br />
         </Col>
-        <Col sm="6">
+        <Col sm='6'>
           <h3>Friends:</h3>
           {friendsDiv}
         </Col>
-        <Col sm="2">
+        <Col sm='2'>
           <h4>Wallet:</h4>
           {wallet ? `$${wallet}` : '$0.00'}
         </Col>
@@ -297,20 +314,15 @@ function Profile() {
         </Container>
       </Row>
 
-      <Modal
-        show={isVisible}
-        onHide={closeDelModal}
-      >
+      <Modal show={isVisible} onHide={closeDelModal}>
         <Modal.Header>
           <Modal.Title>Congratulations</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {message}
-        </Modal.Body>
+        <Modal.Body>{message}</Modal.Body>
         <Modal.Footer>
           <Button
-            variant="secondary"
-            type="submit"
+            variant='secondary'
+            type='submit'
             onClick={() => closeDelModal()}
           >
             Close
@@ -318,24 +330,25 @@ function Profile() {
         </Modal.Footer>
       </Modal>
 
-      <Modal
-        show={show}
-        onHide={closePriceModal}
-        autoFocus={false}
-      >
+      <Modal show={show} onHide={closePriceModal} autoFocus={false}>
         <Modal.Header>
           <Modal.Title>Set Price</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group>
             <Form.Label>Price: </Form.Label>
-            <Form.Control autoFocus={true} type="number" onChange={handleChange} placeholder="0" />
+            <Form.Control
+              autoFocus={true}
+              type='number'
+              onChange={handleChange}
+              placeholder='0'
+            />
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button
-            variant="primary"
-            type="submit"
+            variant='primary'
+            type='submit'
             onClick={() => {
               putSale(imageId);
               closePriceModal();
@@ -348,5 +361,8 @@ function Profile() {
     </Container>
   );
 }
+
+// Really should have re-factored toward the end there, make each modal its own file.
+// Perhaps even make the friendsDiv and artDiv its own file
 
 export default Profile;

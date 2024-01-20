@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
 function NavBar() {
+  // hook used for styling the currently chosen link in the navbar
   const location = useLocation();
   return (
     <>
@@ -40,5 +41,7 @@ function NavBar() {
     </>
   );
 }
+// Note: Outlet is important as all other components (except for home and login) are nested routes of NavBar
+// Outlet is where those components are rendered.
 
 export default NavBar;
