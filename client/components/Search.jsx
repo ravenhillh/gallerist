@@ -40,8 +40,15 @@ function Search() {
       },
     }).then(() => {
       console.log('succesfully posted to db');
+      // deduct $5 from wallet upon adding to gallery
+      axios
+        .put('/db/deductWallet/', {
+          price: 5,
+        })
+        .catch((err) => console.error('Could not deduct from wallet: ', err));
     })
       .catch((err) => {
+        // error message, another user already has this piece
         setMessage('This piece has already been acquired');
         handleShow();
         console.error('Could not post to gallery ', err);
@@ -78,6 +85,7 @@ function Search() {
     idSearch(id);
   });
 
+  // set default search on mount
   useEffect(() => {
     keywordSearch('abstract');
   }, []);
