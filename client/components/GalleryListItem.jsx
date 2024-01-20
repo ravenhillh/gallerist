@@ -19,7 +19,7 @@ function GalleryListItem({ image }) {
   }
 
   return (
-    <Container>
+    <Container fluid>
       <Row>
         <Col>
           <div>

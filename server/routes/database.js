@@ -108,7 +108,7 @@ dbRouter.get('/db/art/:user', (req, res) => {
 });
 
 // GET all art based on :culture filter, returns all art documents with a given culture
-dbRouter.get('/db/art/culture/:culture', (req, res) => {
+dbRouter.get('/db/culture/:culture', (req, res) => {
   const { culture } = req.params;
   Art.find({ culture })
     .then((cultureArt) => {
