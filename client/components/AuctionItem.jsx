@@ -30,7 +30,7 @@ function AuctionItem({ art, setSale }) {
           .put('/db/deductWallet/', {
             price: art.price,
           })
-          .catch((err) => console.error('Could not deduct from wallet: '.err));
+          .catch((err) => console.error('Could not deduct from wallet: ', err));
       })
       .catch((err) => console.error('Could not pay owner: ', err));
   }
