@@ -24,22 +24,8 @@ function PalGallery() {
         })
         .catch((err) => console.log('get filtered images failed', err));
     },
-    [images]
+    [images],
   );
-
-  // send a request to filter by culture
-  const getImagesByCulture = (filter) => {
-    if (!filter) {
-      get25RecentImages();
-    } else {
-      axios
-        .post(`/db/culture/${filter}`, { name: currUser })
-        .then((art) => {
-          setImages(art.data);
-        })
-        .catch((err) => console.log('get images by culture failed', err));
-    }
-  };
 
   // put the initial db request into useEffect to auto render images when you get to page
   useEffect(() => {

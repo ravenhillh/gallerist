@@ -24,7 +24,6 @@ passport.use(new GoogleStrategy({
       //     friends: Array,
       //     wallet: Number,
       //   })
-
     })
     .catch((err) => {
       console.error(' ', err);
@@ -56,7 +55,7 @@ authRouter.get('/oauth2/redirect/google', passport.authenticate('google', {
 authRouter.post('/logout', (req, res, next) => {
   req.logout((err) => {
     if (err) { return next(err); }
-    res.redirect('/');
+    return res.redirect('/');
   });
 });
 

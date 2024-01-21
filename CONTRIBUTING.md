@@ -35,7 +35,7 @@ Fork the organization's [repo](https://github.com/Par-For-Loops/gallerist/) and 
 
 ## **Making Changes**
 
-Once you have the repo forked and cloned down, create a branch and get to hacking. 
+Once you have the repo forked and cloned down, create a branch and get to hacking.
 
 Let this initial version of GLLRST be a muse for whatever code contributions you concoct.
 

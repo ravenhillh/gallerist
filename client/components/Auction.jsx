@@ -66,12 +66,14 @@ function Auction() {
     }
   }, [forSale]);
 
-  // Maps over auctionArray to produce items, pass setSale down as prop to trigger state change in parent
+  // Maps over auctionArray to produce items,
+  // pass setSale down as prop to trigger state change in parent
   const auctionItems = auctionArray.map((art) => (
     <AuctionItem key={art.imageId} art={art} setSale={setSale} />
   ));
 
-  // Wallet not initialized when User created, so ternary is for initial case if User still has an 'undefined' wallet
+  // Wallet not initialized when User created,
+  // so ternary is for initial case if User still has an 'undefined' wallet
   return (
     <Container>
       <Row>
