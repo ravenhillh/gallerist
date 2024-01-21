@@ -26,8 +26,8 @@ function Gallery() {
       .catch((err) => console.log(err));
   };
 
-  // use an axios request to get the 25? most recent saved images from art db
-  const get25RecentImages = () => {
+  // use an axios request to get all saved images from art db
+  const getAllImages = () => {
     axios('/db/art')
       .then((art) => {
         const newCults = art.data.reduce((acc, curr) => {
@@ -43,9 +43,9 @@ function Gallery() {
   };
 
   // use an axios request to get a list of filtered images from art db based on user
-  const getFilteredImages = (filter) => {
-    setCurrUser(filter);
-    axios(`/db/art/${filter}`)
+  const getImagesByUser = (user) => {
+    setCurrUser(user);
+    axios(`/db/art/${user}`)
       .then((art) => {
         setImages(art.data);
         const newCults = art.data.reduce((acc, curr) => {
@@ -61,7 +61,7 @@ function Gallery() {
   // send a request to filter by culture
   const getImagesByCulture = (filter) => {
     if (!filter) {
-      get25RecentImages();
+      getAllImages();
     } else {
       axios.post(`/db/culture/${filter}`, { name: currUser })
         .then((art) => {
@@ -90,7 +90,7 @@ function Gallery() {
   ));
   // put the initial db request into useEffect to auto render images when you get to page
   useEffect(() => {
-    get25RecentImages();
+    getAllImages();
     getAllUsers();
   }, []);
 
@@ -103,7 +103,7 @@ function Gallery() {
         <Col md={2}>
           <div className="dropdown">
             <h3 className="section-header text-center">Curators</h3>
-            <Form.Select defaultValue="" onChange={(e) => getFilteredImages(e.target.value)}>
+            <Form.Select defaultValue="" onChange={(e) => getImagesByUser(e.target.value)}>
               <option value="" key="54321">All</option>
               {userList}
             </Form.Select>

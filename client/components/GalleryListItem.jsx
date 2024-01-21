@@ -13,13 +13,15 @@ function GalleryListItem({ image }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
   // add a friend to users friend array
   function addFriend(e) {
-    // console.log(e.target.value)
     axios.put('/db/friends/', { friend: e.target.value })
-      .then(() => {
+      .then((res) => {
         // use modal after friend is added
-        handleShow();
+        if (res.status === 200) {
+          handleShow();
+        }
       })
       .catch((err) => console.log(err, 'friend not added'));
   }
