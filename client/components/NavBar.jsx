@@ -41,7 +41,7 @@ function NavBar() {
     </>
   );
 }
-// Note: Outlet is important as all other components (except for home and login) are nested routes of NavBar
+// Note: Outlet is required as all other components (except for home and login) are nested routes
 // Outlet is where those components are rendered.
 
 export default NavBar;

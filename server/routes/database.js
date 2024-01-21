@@ -31,13 +31,14 @@ dbRouter.get('/db/users/', (req, res) => {
 
 // USERS Routes: Update via a Put request
 // don't think this endpoint was ever used, was written to allow user to change username
-// was also used for a while to update gallery object on user, but that was deleted as it caused a double source of truth
+// was also used for a while to update gallery object on user,
+// but that was deleted as it caused a double source of truth
 // '/db/user/:id'
 dbRouter.put('/db/user/:id', (req, res) => {
   const { id } = req.params;
   const fieldsToUpdate = req.body; // gallery: {imageid: artObj} or username: 'so-and-so'
   User.findByIdAndUpdate(id, fieldsToUpdate)
-    .then((updObj) => {
+    .then(() => {
       res.sendStatus(200);
       // res.sendStatus(404); //when we figure out what updObj looks like
     })
@@ -52,7 +53,7 @@ dbRouter.put('/db/giveMoney/:name', (req, res) => {
   const { name } = req.params;
   const { price } = req.body;
   User.findOneAndUpdate({ name }, { $inc: { wallet: price } }, { new: true })
-    .then((updObj) => {
+    .then(() => {
       res.sendStatus(200);
     })
     .catch((err) => {
@@ -66,7 +67,7 @@ dbRouter.put('/db/deductWallet/', (req, res) => {
   const { _id } = req.user.doc;
   const { price } = req.body;
   User.findByIdAndUpdate(_id, { $inc: { wallet: -price } }, { new: true })
-    .then((updObj) => {
+    .then(() => {
       res.sendStatus(200);
     })
     .catch((err) => {
@@ -164,8 +165,10 @@ dbRouter.post('/db/culture/:culture', (req, res) => {
 });
 
 // Updates art object.  Used in Profile and Auction for listing/unlisting/purchasing of art.
-// Takes parameter of imageId as the filter object, then fields in req.body are part of update object,
-// Lastly, takes googleId and name from req.user.doc to update userGallery field based on which user sent request
+// Takes parameter of imageId as the filter object,
+// then fields in req.body are part of update object,
+// Lastly, takes googleId and name from req.user.doc
+// to update userGallery field based on which user sent request
 dbRouter.put('/db/art/:imageId', (req, res) => {
   const { imageId } = req.params;
   const { googleId, name } = req.user.doc;
@@ -216,11 +219,11 @@ dbRouter.put('/db/friends/', (req, res) => {
           user._id,
           { $push: { friends: friend } },
           { new: true },
-        ).then((updObj) => {
+        ).then(() => {
           res.sendStatus(200);
         });
       } else {
-        res.sendStatus(204);  // axios doesn't like 304 statuses
+        res.sendStatus(204); // axios doesn't like 304 statuses
       }
     })
     .catch((err) => {
@@ -235,7 +238,8 @@ dbRouter.put('/db/unfriend/', (req, res) => {
   const { googleId } = req.user.doc;
   User.findOne({ googleId })
     .then((user) => {
-      // Might be a mongoose trick to do this, but I just find the index of the string of the friend's name
+      // Might be a mongoose trick to do this,
+      // but I just find the index of the string of the friend's name
       const idx = user.friends.indexOf(friend);
       // ...and splice it out (splice is mutative/destructive)
       user.friends.splice(idx, 1);

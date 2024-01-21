@@ -78,7 +78,8 @@ function Profile() {
     setPrice(event.target.value);
   }
 
-  // Left for posterity's sake, this was the original way to set art for sale before price was implemented
+  // Left for posterity's sake,
+  // this was the original way to set art for sale before price was implemented
   // Way to putSale with only button, no pricing
   // Updates art object by changing isForSale field to true
   // function putSale(event) {
@@ -91,7 +92,7 @@ function Profile() {
   //     .catch((err) => console.error('Could not Put update on artwork: ', err));
   // }
 
-  // Added complementary feature to allow user to unlist an art item instead of having to go to Auction to buy it back
+  // Added complementary func for user to unlist item instead of going to Auction to buy it back
   function unlistSale(event) {
     axios
       .put(`/db/art/${event.target.value}`, {
@@ -124,11 +125,11 @@ function Profile() {
     ];
     // Generates a random purchase price of 0 to 49
     const randomPrice = Math.floor(Math.random() * 50);
-    // Randomly selects a broker and pays you a random amount for deleting your art. I know, this makes no sense.
+    // Randomly selects broker, pays random amount for deleting art. (I know, this makes no sense.)
     setMessage(
       `${
         brokerArray[Math.floor(Math.random() * brokerArray.length)]
-      } bought your artwork for $${randomPrice}.`
+      } bought your artwork for $${randomPrice}.`,
     );
     // Modal with the surprise news that your worthless art was actually worth something
     showDelModal();
@@ -143,9 +144,7 @@ function Profile() {
         price: randomPrice,
       })
       .then(() => getProfile())
-      .catch((err) =>
-        console.error('Could not get paid by Artie McBuyer: ', err)
-      );
+      .catch((err) => console.error('Could not get paid by Artie McBuyer: ', err));
   }
 
   // Iterate over friends array, could be improved by linking to friend's gallery perhaps
@@ -156,18 +155,18 @@ function Profile() {
         <ListGroup.Item key={`${pal}-${i}`}>
           <Container>
             <Row>
-              <Col sm='2'>
+              <Col sm="2">
                 <Button
-                  variant='outline'
-                  type='button'
-                  size='sm'
+                  variant="outline"
+                  type="button"
+                  size="sm"
                   value={pal}
                   onClick={unFriend}
                 >
                   ❌
                 </Button>
               </Col>
-              <Col sm='10'>
+              <Col sm="10">
                 <Link to={`/home/palGal/${pal}`}>{pal}</Link>
               </Col>
             </Row>
@@ -185,8 +184,8 @@ function Profile() {
   // Each Item of Accordion is a ListGroup, each ListGroup.Item is art title and artist
   // with a couple of buttons to sell at auction, or delete, links to image url
   const artDiv = gallery ? (
-    <Accordion defaultActiveKey='0'>
-      <Accordion.Item eventKey='0'>
+    <Accordion defaultActiveKey="0">
+      <Accordion.Item eventKey="0">
         <Accordion.Header>Artworks:</Accordion.Header>
         <Accordion.Body>
           <ListGroup>
@@ -196,7 +195,7 @@ function Profile() {
                 <ListGroup.Item key={`${art}-${i}`}>
                   <Container>
                     <Row>
-                      <Col sm='10'>
+                      <Col sm="10">
                         <Row>
                           <Link to={`/home/art/${art.imageId}`}>
                             <strong>{art.title}</strong>
@@ -204,10 +203,10 @@ function Profile() {
                         </Row>
                         <Row>{art.artist}</Row>
                       </Col>
-                      <Col sm='1'>
+                      <Col sm="1">
                         <Button
-                          variant='outline-success'
-                          type='button'
+                          variant="outline-success"
+                          type="button"
                           value={art.imageId}
                           // onClick={putSale}
                           onClick={(e) => {
@@ -218,10 +217,10 @@ function Profile() {
                           Sell
                         </Button>
                       </Col>
-                      <Col sm='1'>
+                      <Col sm="1">
                         <Button
-                          variant='outline'
-                          type='button'
+                          variant="outline"
+                          type="button"
                           value={art.imageId}
                           onClick={deleteArt}
                         >
@@ -235,7 +234,7 @@ function Profile() {
           </ListGroup>
         </Accordion.Body>
       </Accordion.Item>
-      <Accordion.Item eventKey='1'>
+      <Accordion.Item eventKey="1">
         <Accordion.Header>Art For Sale:</Accordion.Header>
         <Accordion.Body>
           <ListGroup>
@@ -245,7 +244,7 @@ function Profile() {
                 <ListGroup.Item key={`${art}-${i}`}>
                   <Container>
                     <Row>
-                      <Col sm='10'>
+                      <Col sm="10">
                         <Row>
                           <Link to={`/home/art/${art.imageId}`}>
                             <strong>{art.title}</strong>
@@ -253,20 +252,20 @@ function Profile() {
                         </Row>
                         <Row>{art.artist}</Row>
                       </Col>
-                      <Col sm='1'>
+                      <Col sm="1">
                         <Button
-                          variant='outline-warning'
-                          type='button'
+                          variant="outline-warning"
+                          type="button"
                           value={art.imageId}
                           onClick={unlistSale}
                         >
                           Unlist
                         </Button>
                       </Col>
-                      <Col sm='1'>
+                      <Col sm="1">
                         <Button
-                          variant='outline'
-                          type='button'
+                          variant="outline"
+                          type="button"
                           value={art.imageId}
                           onClick={deleteArt}
                         >
@@ -290,7 +289,7 @@ function Profile() {
   return (
     <Container>
       <Row>
-        <Col sm='4'>
+        <Col sm="4">
           <Link to={`/home/palGal/${name}`}>
             <h2>
               <strong>{name}</strong>
@@ -298,11 +297,11 @@ function Profile() {
           </Link>
           <br />
         </Col>
-        <Col sm='6'>
+        <Col sm="6">
           <h3>Friends:</h3>
           {friendsDiv}
         </Col>
-        <Col sm='2'>
+        <Col sm="2">
           <h4>Wallet:</h4>
           {wallet ? `$${wallet}` : '$0.00'}
         </Col>
@@ -321,8 +320,8 @@ function Profile() {
         <Modal.Body>{message}</Modal.Body>
         <Modal.Footer>
           <Button
-            variant='secondary'
-            type='submit'
+            variant="secondary"
+            type="submit"
             onClick={() => closeDelModal()}
           >
             Close
@@ -338,17 +337,17 @@ function Profile() {
           <Form.Group>
             <Form.Label>Price: </Form.Label>
             <Form.Control
-              autoFocus={true}
-              type='number'
+              autoFocus
+              type="number"
               onChange={handleChange}
-              placeholder='0'
+              placeholder="0"
             />
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button
-            variant='primary'
-            type='submit'
+            variant="primary"
+            type="submit"
             onClick={() => {
               putSale(imageId);
               closePriceModal();

@@ -13,7 +13,7 @@ function GalleryListItem({ image }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
+
   // add a friend to users friend array
   function addFriend(e) {
     axios.put('/db/friends/', { friend: e.target.value })
@@ -57,7 +57,7 @@ function GalleryListItem({ image }) {
         </Col>
       </Row>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Body>You've got a new friend!</Modal.Body>
+        <Modal.Body>{'You\'ve got a new friend!'}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
