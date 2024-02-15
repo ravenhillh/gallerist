@@ -46,6 +46,8 @@ We interact with the Harvard University Art Museum (HUAM) API to retrieve art.  
 
 When we initially made this project in January 2024, this key was free, and the email response from Harvard was instantaneous and automatic. We hope the above details remain true for you, but be aware that this could possibly change.
 
+Also, please note that we did not realize the API does not return the most standardized objects from each endpoint.  The "This artwork is no longer available" modal was the band-aid we developed for this problem.  Perhaps you can find a better fix for handling the API responses, or switch to a more uniform art museum API altogether...
+
 ### **Environmental Variables**
 
 #### **Required Variables for App to Function**
@@ -73,6 +75,67 @@ You can then run the `npm run build` script to allow webpack and babel to create
 
 Lastly, run `npm start` to create a server and you should have a local instance of our site running at the 3000 port. Your server terminal should provide a link to open the application in your browser.
 
+## **Deployment**
+
+Deploy to an AWS EC2 Ubuntu machine with the following steps:
+
+### **1. Set up AWS root account**
+
+[Here](https://aws.amazon.com/) if you do not already have an account...
+
+### **2. Launch an Ubuntu instance**
+
+Provide a project name, select the Ubuntu option in the 'Quick Start' menu, then select a free tier, and create a new key pair for SSH access (see Shortly Deploy instructions for clarity if needed), and save the key where you can find it. Create a new security group, then skip configuring ssh and IP access for now-we'll do it all in a sec. Lastly, click 'Launch instance' in the lower-right corner of the screen.
+
+Beware: make sure you only have one running instance, or you will quickly deplenish the free-tier hours and incur overage charges.
+
+### **3. Change firewall rules**
+
+Navigate to the 'Instance summary' in AWS and click on the Security tab about halfway down the page. Then click the link to access the Security Group that contains the firewall rules for the instance ("sg-somethingSomethingSomething" or similar). Then click 'Edit inbound rules', and add the three rules below:
+
+|     TYPE      |  PORT RANGE   |     SOURCE      |      WHY?                             |
+| ------------- | ------------- | -------------   | ------------------------------------- |
+| SSH           |  22           | Local-Dev-IP/32 |  SSH into instance from your computer |
+| Custom TCP    | 4000 (server) | 0.0.0.0/0       | User access from internet             |
+
+Now that SSH access is enabled, we'll connect to the instance and set it up to host the app.
+
+### **4. Connect to instance**
+
+Instructions for connecting to the instance can be found by clicking Connect in the menu at the top of the AWS instance panel.
+
+SSH into the instance by using either OpenSSH or Putty.
+
+AWS suggests running `chmod 400 your-Key.pem` from the folder in which the key is located to ensure the key is private. A typical OpenSSH command to access the instance from that same directory location is below:
+
+`ssh -i "your-Key.pem" ubuntu@public-DNS-Address`
+
+The public DNS address typically ends with 'compute.amazonaws.com'.
+
+### **5. Clone repo, download dependencies, configure db**
+
+From the instance's root folder, clone down the app's repo from Github.
+
+`git clone https://github.com/Group-Name/repo-Name`
+
+Then cd into the project's folder and install its dependencies.
+
+`npm install`
+
+Lastly, you must recreate the .env file by running the following command:
+
+`nano .env` (and paste in the variables outlined above)
+
+You must then exit the text editor with `:wq` or `^x` depending on your editor and follow the prompts to save the file.  Check your work by running `cat .env` to read the newly created .env file with the correct environmental variables.
+
+### 7. Build the app, start the server, and access
+
+Run the following commands to a build the app for deployment and start the server:
+
+```npm run build```
+
+```npm run start```
+
 ## **Contributing**
 
 This project was created by a small team of 4 developers. Those interested in adding their own twist should check out our [Contributing Guide](https://github.com/Par-For-Loops/gallerist/blob/main/CONTRIBUTING.md). You'll find all the necessary information about forking the repo and getting started. Please check out our [Style Guide](https://github.com/Par-For-Loops/gallerist/blob/main/STYLE-GUIDE.md) too.
@@ -83,5 +146,10 @@ Lastly, we'd like to express our thanks to the instructors and fellow students a
 
 ## **Contact Info**
 
-Nathan Cassiani https://github.com/nwcassiani
-Ky Patton https://github.com/kycodee
+[Nathan Cassiani](https://github.com/nwcassiani)
+
+[Ky Patton](https://github.com/kycodee)
+
+[Raven Hughes](https://github.com/ravenhillh)
+
+[Robert Frank](https://githbu.com/jrfiii)
