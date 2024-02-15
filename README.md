@@ -2,48 +2,41 @@
 
 Welcome to GLLRST, a fun art sharing app for friends! Search through the collections and archives of a museum to curate your own gallery of fine art. Check out our [Press Release](https://github.com/Par-For-Loops/gallerist/blob/main/_PRESS_RELEASE.md) for more details.
 
-This project was created by a small team of 4 developers. Those interested in adding their own twist should check out our [Contributing Guide](https://github.com/Par-For-Loops/gallerist/blob/main/CONTRIBUTING.md). You'll find all the necessary information about forking the repo and getting started. Please check out our [Style Guide](https://github.com/Par-For-Loops/gallerist/blob/main/STYLE-GUIDE.md) too.
-
 ## **Features**
 
-Once signed in with a Google account, our home page has a simple navbar to allow the user to access each of the following features.
+Once signed in with a Google account, our home page has a simple navbar to allow the user to access each of the following features:
 
 ### **Search**
 
-The search page allows users to search art by a keyword and returns 10 randomized results related to that keyword.
-If the users likes an artwork, they can click on the heart emoji below to attempt to add it to their personal
-gallery. Some artworks remain out of bounds for GLLRST users (such is the harsh reality of the art market!), and
-artworks that have been previously acquired by other users will also not be available. However, successful acquisition of a piece will only cost $5 (deducted from the user's wallet), and will be added to the user's gallery.
+The search page allows users to search art by a keyword and returns 10 randomized results related to that keyword. If the users likes an artwork, they can click on the heart emoji below to attempt to add it to their personal gallery. Some artworks remain out of bounds for GLLRST users (such is the harsh reality of the art market!), and artworks that have been previously acquired by other users will also not be available. However, successful acquisition of a piece will only cost $5 (deducted from the user's wallet), and will be added to the user's gallery.
 
 ### **Gallery**
 
-The gallery page displays all the art in the gallery. You can filter the art by who owns it, and by the culture of the art.
-You can also use this page to add friends, based on the art pieces you're looking at. Each piece of art also links to another
-page where you can find a more in depth description of the piece.
+The gallery page displays all the art in the gallery. You can filter the art by who owns it, and by the culture of the art. You can also use this page to add friends, based on the art pieces you're looking at. Each piece of art also links to another page where you can find a more in depth description of the piece.
 
 ### **Individual Artwork Info**
 
-(Ky feature explanation)
+The Individual Artwork Info page gives a user a more in-depth explanation of a piece of artwork. It tells you things like the culture of the art and the time period it was made in. There is a direct link to the piece of art on the Harvard Museum's website in the info section as well. If you like a piece of art and would like to add the owner as a friend, you can do that too.
 
 ### **Profile**
 
-The Profile page allows the user to manage their collected artworks and friends' list, as well as check the funds in their wallet.  Art can be listed for sale in the Auction section, or simply deleted from their gallery, where it might still be picked up by an enterprising art dealer.
+The Profile page allows the user to manage their collected artworks and friends list, as well as check the funds in their wallet.  Art can be listed for sale in the Auction section, or simply deleted from their gallery, where it might still be picked up by an enterprising art dealer.
 
 ### **Auction**
 
 The Auction page lists all of the art that has been listed for sale by all of the users.  It also reminds the user of the available funds in their wallet. Artwork can be perused and purchased for the list price with the simple click of a button. Don't spend too much time contemplating your purchase, or it might be bought out from under your nose.  All sales are final.
 
-## **Framework and Libraries**
+## **Frameworks and Libraries**
 
-The app was developed with **Node 20** on an **Express 4.18** framework that handles back-end requests.  Our database is **MongoDb Community v5.0** using a **Mongoose v8** ORM.
+The app was developed with **Node 20** on an **Express 4.18** framework that handles back-end requests.  Our database is **MongoDb Community v5.0** using a **Mongoose v8** ODM.
 
 Authentication is handled by **Passport** with a **Google Oauth 2.0** strategy. Environmental variables are handled by **Dotenv**.
 
-The front-end was designed with **React v18**, with **Hooks**.  Client-side routing is handled by **React Router v6.21**.  Styling is **Bootstrap v5.3**, with several **React Bootstrap** components, as well as preprocessing with **Sass**.
+The front-end was designed with **React v18**, with **Hooks**.  Client-side routing is handled by **React Router v6.21**.  Styling is **Bootstrap v5.3**, with several **React Bootstrap** components, as well as CSS preprocessing with **Sass**.
 
 Several other devDependencies used by our team include linting by **Eslint extending AirBnB** rules, with JSX, React, and React Hooks plugins, as well as a few customizations.  Our build was bundled by **Webpack**, with the JavaScript compiled by **Babel**.  We used **Prettier** to help enforce code formatting.
 
-Please refer to our [package.json](https://github.com/Par-For-Loops/gallerist/blob/main/package.json) for the full list of dependenciese and versions.
+Please refer to our [package.json](https://github.com/Par-For-Loops/gallerist/blob/main/package.json) for the full list of dependencies and versions.
 
 ## **Getting Started**
 
@@ -80,6 +73,15 @@ You can then run the `npm run build` script to allow webpack and babel to create
 
 Lastly, run `npm start` to create a server and you should have a local instance of our site running at the 3000 port. Your server terminal should provide a link to open the application in your browser.
 
+## **Contributing**
+
+This project was created by a small team of 4 developers. Those interested in adding their own twist should check out our [Contributing Guide](https://github.com/Par-For-Loops/gallerist/blob/main/CONTRIBUTING.md). You'll find all the necessary information about forking the repo and getting started. Please check out our [Style Guide](https://github.com/Par-For-Loops/gallerist/blob/main/STYLE-GUIDE.md) too.
+
 ## **Thank you**
 
 Lastly, we'd like to express our thanks to the instructors and fellow students at Operation Spark in New Orleans, Louisiana for their guidance and expertise, as well as our friends and family for their unconditional support.
+
+## **Contact Info**
+
+Nathan Cassiani https://github.com/nwcassiani
+Ky Patton https://github.com/kycodee
