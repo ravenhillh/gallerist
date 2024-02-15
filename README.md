@@ -96,7 +96,7 @@ Navigate to the 'Instance summary' in AWS and click on the Security tab about ha
 |     TYPE      |  PORT RANGE   |     SOURCE      |      WHY?                             |
 | ------------- | ------------- | -------------   | ------------------------------------- |
 | SSH           |  22           | Local-Dev-IP/32 |  SSH into instance from your computer |
-| Custom TCP    | 4000 (server) | 0.0.0.0/0       | User access from internet             |
+| Custom TCP    | 3000 (server) | 0.0.0.0/0       | User access from internet             |
 
 Now that SSH access is enabled, we'll connect to the instance and set it up to host the app.
 
