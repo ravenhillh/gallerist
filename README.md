@@ -12,7 +12,7 @@ The search page allows users to search art by a keyword and returns 10 randomize
 
 ### **Gallery**
 
-The gallery page displays all the art in the gallery. You can filter the art by who owns it, and by the culture of the art. You can also use this page to add friends, based on the art pieces you're looking at. Each piece of art also links to another page where you can find a more in depth description of the piece.
+The gallery page displays all the art in the gallery. You can filter the art by owner, and by the culture of the art. You can also use this page to add friends, based on the art pieces you're looking at. Each piece of art also links to another page where you can find a more in depth description of the piece.
 
 ### **Individual Artwork Info**
 
