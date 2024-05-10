@@ -34,7 +34,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: 'mongodb://localhost/gallerist',
+    mongoUrl: 'mongodb+srv://ravenhillh:QZvJt8CIOTwXMn6f@cluster0.mewfsw8.mongodb.net/?retryWrites=true&w=majority',
     ttl: 14 * 24 * 60 * 60,
     autoRemove: 'native',
   }),
