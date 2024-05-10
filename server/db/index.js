@@ -5,12 +5,13 @@ const findOrCreate = require('mongoose-findorcreate');
 const { Schema, model } = mongoose;
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const { ATLAS_URI } = process.env;
 
-const db_uri = 'mongodb://localhost/gallerist';
+const uri = process.env.MONGODB_URI;
+
+// const db_uri = 'mongodb://localhost/gallerist';
 
 mongoose
-  .connect(ATLAS_URI)
+  .connect(uri)
   .then(() => console.log('Connection to Database successful'))
   .catch((err) => console.log('Could not connect to database ', err));
 
